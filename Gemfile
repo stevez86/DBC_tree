@@ -17,6 +17,8 @@ gem 'shotgun'
 gem 'rack-flash3'
 gem 'sinatra-redirect-with-flash'
 
+gem 'hirb'
+
 group :test do
   gem 'shoulda-matchers'
   gem 'rack-test'
