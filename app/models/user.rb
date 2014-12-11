@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :tweets
 
   def following
     followings = Following.where(follower_id: self.id)
