@@ -3,7 +3,7 @@ get '/' do
 end
 
 get '/user/:id' do
-  @user = User.find(id)
+  @user = User.find(params[:id])
   @tweets = @user.tweets
   erb :'user/profile'
 end
