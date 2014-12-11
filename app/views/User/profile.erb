@@ -1,1 +1,26 @@
-<p>profile</p>
+<h3>Profile Page</h3>
+
+<h1><%= @user.username %></h1>
+
+<h2>Tweet Display</h2>
+<% @tweets.each do |tweet| %>
+  <p><%= tweet.content %></p>
+  <button action="/user/<% @user.id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+  </button>
+<%end%>
+
+<form action="/user/<% @user.id %>" method="post">
+  <h3>Post a Tweet!</h3>
+  <input class="input" type="text" name="tweet">
+  <br>
+  <input class="label" type="submit" value="Post Tweet">
+</form>
+
+
+
+
+
+
+<a href='/'>Back to Home<a>
+
