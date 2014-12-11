@@ -1,0 +1,33 @@
+<div class="login-signup">
+  <div class="header">Welcome to the New Twitter ~ Nitter</div>
+  <div class="body">
+    <div id="login_error_message"><%= flash[:notice] if flash[:notice] %></div>
+    <div class="login">
+      <h2>Login:</h2>
+      <form action="/login" method="post">
+        <div class="label"><label>Username:</label></div>
+        <input class="input" type="text" name="username">
+        <br>
+        <div class="label"><label>Password:</label></div>
+        <input class="input" type="password" name="password">
+        <br>
+        <input class="label" class="label" type="submit" value="Login">
+      </form>
+    </div>
+    <div class="signup">
+      <h2>Signup:</h2>
+      <form action="/signup" method="post">
+        <div class="label"><label>Email:</label></div>
+        <input class="input" type="text" name="email">
+        <br>
+        <div class="label"><label>Username:</label></div>
+        <input class="input" type="text" name="username">
+        <br>
+        <div class="label"><label>Password:</label></div>
+        <input class="input" type="password" name="password">
+        <br>
+        <input class="label" type="submit" value="Create Account">
+      </form>
+    </div>
+  </div>
+</div>

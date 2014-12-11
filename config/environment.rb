@@ -18,7 +18,14 @@ require 'logger'
 require 'sinatra'
 require "sinatra/reloader" if development?
 
+require 'rack-flash'
+
 require 'erb'
+
+require 'hirb'
+Hirb.enable
+
+require 'bcrypt'
 
 # Some helper constants for path-centric logic
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
@@ -31,8 +38,10 @@ configure do
   set :root, APP_ROOT.to_path
   # See: http://www.sinatrarb.com/faq.html#sessions
   enable :sessions
+  use Rack::Flash
   set :session_secret, ENV['SESSION_SECRET'] || 'this is a secret shhhhh'
 
+  # use Rack::Flash3, :sweep => true
   # Set the views to
   set :views, File.join(Sinatra::Application.root, "app", "views")
 end
