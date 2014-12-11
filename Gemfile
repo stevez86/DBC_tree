@@ -14,6 +14,8 @@ gem 'activerecord', '~>4.1'
 gem 'rake'
 
 gem 'shotgun'
+gem 'rack-flash3'
+gem 'sinatra-redirect-with-flash'
 
 group :test do
   gem 'shoulda-matchers'

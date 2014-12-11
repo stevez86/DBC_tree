@@ -1,0 +1,35 @@
+.login-signup {
+  text-align: center;
+  background-color: #CCFFFF;
+  padding:15px;
+  height: 100%;
+  font-family: Avenir;
+}
+
+.login-signup .header {
+  font-size: 50px;
+  border-bottom: 1px solid #B2B2B2;
+}
+
+.login-signup h2 {
+  font-size: 25px;
+  margin-top: 0px;
+}
+
+.login, .signup {
+  text-align: left;
+  vertical-align: top;
+  display: inline-block;
+  margin: 30px;
+}
+
+.label {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+#login_error_message {
+  color: red;
+  /*font-weight: bold;*/
+  font-size: 20px;
+}
