@@ -16,6 +16,22 @@
   <script src="/js/application.js"></script>
 
   <title></title>
+
+  <div class="heading">
+    <form action="/user/<%= @user.id %>/timeline" method="get">
+      <button class="headbutton">Timeline</button>
+    </form>
+    <form action="/user/<%= @user.id %>" method="get">
+      <button class="headbutton">Profile</button>
+    </form>
+    <form action="/user/<%= @user.id %>/followers" method="get">
+      <button class="headbutton">Followers</button>
+    </form>
+    <form action="/user/<%= @user.id %>/following" method="get">
+      <button class="headbutton">Following</button>
+    </form>
+      <button class="signout">Sign Out</button>
+  </div>
 </head>
 <body>
   <%= yield %>

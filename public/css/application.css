@@ -1,0 +1,67 @@
+.heading {
+  	height: 65px;
+	width: 100%;
+	font-family: Avenir;
+	float: right;
+	border: 1px solid black;
+	background-position: 0px 0px;
+	-webkit-animation: animatedBackground 20s linear infinite;
+	background-image: url('http://new.antiskimmingeye.com/wp-content/uploads/2013/11/ase-banner2.jpg');
+}
+
+@-webkit-keyframes animatedBackground {
+	0% { background-position: 0 0; }
+	100% { background-position: -220px 0; }
+}
+
+.headbutton {
+	font-family: avenir;
+	font-size: 80%;
+	padding: .1em .5em;
+	color: #444;
+	color: rgba(0,0,0,.8);
+	border: 1px solid #999;
+	border: 0 rgba(0,0,0,0);
+	background-color: #E6E6E6;
+	text-decoration: none;
+	border-radius: 3px;
+	font-weight: 100;
+	letter-spacing: 0.01em;
+	height: 70%;
+  	margin-left: 10px;
+  	margin-top: 9px;
+  	transition: all .5s linear;
+}
+
+.headbutton:hover{
+  	box-shadow: 0 2px 0 grey;
+  	transform: translateY(3px);
+  	background: #FFB870;
+}
+
+.signout {
+	float: right;
+	position: relative;
+	font-family: avenir;
+	font-size: 80%;
+	padding: .1em .5em;
+	color: #444;
+	color: rgba(0,0,0,.8);
+	border: 1px solid #999;
+	border: 0 rgba(0,0,0,0);
+	background-color: #E6E6E6;
+	text-decoration: none;
+	border-radius: 3px;
+	font-weight: 100;
+	letter-spacing: 0.01em;
+	height: 70%;
+	top: 15%;
+  	right:1%;
+  	transition: all .5s linear;
+}
+
+.signout:hover{
+  box-shadow: 0 2px 0 grey;
+  transform: translateY(3px);
+  background: #FFB870;
+}
