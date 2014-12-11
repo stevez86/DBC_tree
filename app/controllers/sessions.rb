@@ -9,32 +9,38 @@ end
 post '/login' do
 
   begin
-    user = User.find(username: params[username], email: params[email], password_hash: params[password])
-  TODO
+    @user = User.find_by_username(params[:username])
+
+    if @user.password != params[:password]
+      flash[:notice] = "Incorrect Password"
+      redirect_home
+    end
+
   rescue => error
   end
 
   if error
     flash[:notice] = "Login Error #{error}"
-    redirect '/'
+    redirect_home
   else
-    login(new_user)
+    login(@user)
     redirect_home
   end
 end
 
 
-post '/create_user' do
+post '/signup' do
   begin
-    new_user = User.new(username: params[username], email: params[email])
+    new_user = User.new(username: params[:username], email: params[:email])
     new_user.password = params[:password]
     new_user.save!
   rescue => error
   end
 
   if error
-    flash[:notice] = "Signup Error #{error}"
-    redirect '/'
+    # case
+    flash[:notice] = error
+    redirect_home
   else
     login(new_user)
     redirect_home
