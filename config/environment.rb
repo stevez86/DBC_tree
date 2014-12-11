@@ -18,6 +18,8 @@ require 'logger'
 require 'sinatra'
 require "sinatra/reloader" if development?
 
+require 'rack-flash'
+
 require 'erb'
 
 # Some helper constants for path-centric logic
@@ -31,8 +33,10 @@ configure do
   set :root, APP_ROOT.to_path
   # See: http://www.sinatrarb.com/faq.html#sessions
   enable :sessions
+  use Rack::Flash
   set :session_secret, ENV['SESSION_SECRET'] || 'this is a secret shhhhh'
 
+  # use Rack::Flash3, :sweep => true
   # Set the views to
   set :views, File.join(Sinatra::Application.root, "app", "views")
 end
