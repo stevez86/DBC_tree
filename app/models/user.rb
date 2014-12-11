@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :username, :password, :email, presence: true
 
+  include BCrypt
+
   def following
     followings = Following.where(follower_id: self.id)
     followed_ids = followings.pluck(:user_id)
@@ -31,5 +33,14 @@ class User < ActiveRecord::Base
     unless self.followers.include? user
       Following.create(user_id: self.id, follower_id: user.id)
     end
+  end
+
+  def password
+    @password ||= Password.new(password_hash)
+  end
+
+  def password=(new_password)
+    @password = Password.create(new_password)
+    self.password_hash = @password
   end
 end

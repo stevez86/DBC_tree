@@ -19,7 +19,7 @@ helpers  do
 
   def redirect_home
     if authorized?
-      redirect "/user/#{session[:user_id]}/timeline"
+      redirect "/user/#{session[:user_id]}"
     else
       redirect '/'
     end

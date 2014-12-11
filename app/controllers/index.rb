@@ -1,16 +1,3 @@
-get '/' do
-  erb :index
-end
-
-get '/signup' do
-  erb :login
-end
-
-post '/signup' do
-  @user = User.create!(params)
-  redirect "/user/#{@user.id}" #may not work
-end
-
 get '/user/:id' do
   @user = User.find(id)
   @tweets = @user.tweets
