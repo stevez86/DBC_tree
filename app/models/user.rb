@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
   has_many :tweets
 
+  validates :username, uniqueness: true
+  validates :email, uniqueness: true
+  validates :username, :password, :email, presence: true
+
   def following
     followings = Following.where(follower_id: self.id)
     followed_ids = followings.pluck(:user_id)
