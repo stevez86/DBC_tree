@@ -1,2 +1,28 @@
-<%= username %>
-<% logout %>
+<h3>Profile Page</h3>
+
+<h1><%= @user.username %></h1>
+
+<h2>Tweet Display</h2>
+<p>Num Following</p>
+<%= @user.following.count %> <a href="/user/<%=@user.id%>/following"><button>See Who's Following You</button></a>
+<p>Num of Followers</p>
+<%= @user.followers.count %> <a href="/user/<%=@user.id%>/followers"><button>See Your Followers</button></a>
+<form action="/user/<%=@user.id%>" method="post">
+  <h3>Post a Tweet!</h3>
+  <input class="input" type="text" name="content">
+  <br>
+  <input class="label" type="submit" value="Post Tweet">
+</form>
+<% @tweets.each do |tweet| %>
+  <p><%= tweet.content %></p>
+  <form action="/tweet/<%= tweet.id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="delete">
+  </form>
+  <a href="/tweet/<%= tweet.id %>/edit"><button>Edit Tweet</button></a>
+<%end%>
+
+
+
+<a href='/'>Back to Home<a>
+

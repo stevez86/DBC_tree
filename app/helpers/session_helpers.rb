@@ -11,15 +11,20 @@ helpers  do
 
   def logout
     session.clear
+    redirect_home
   end
 
-  def username
-    session[:username] || "Guest"
+  def session_username
+    session[:username]
+  end
+
+  def session_user_id
+    session[:user_id]
   end
 
   def redirect_home
     if authorized?
-      redirect "/user/#{session[:user_id]}"
+      redirect "/user/#{session_user_id}"
     else
       redirect '/'
     end
