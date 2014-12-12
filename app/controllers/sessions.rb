@@ -43,6 +43,6 @@ post '/signup' do
     redirect_home
   else
     login(new_user)
-    redirect ("/user/#{new_user.id}")
+    redirect_home
   end
 end
