@@ -1,0 +1,11 @@
+<div class="tweet">
+  <% user = user_from_id(tweet.user_id) %>
+  <%= gravatar_image(user.email) %>
+  <p class="username"><%= user.username %></p>
+  <p class="content"><%= tweet.content %></p>
+  <form action="/tweets/<%= tweet.id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete">
+  </form>
+  <p class="created-at">tweeted on <%= tweet.updated_at %></p>
+</div>

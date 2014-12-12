@@ -9,12 +9,7 @@
 	  <input type="submit" value="Tweet" class="body_buttons"></input>
 	</form>
 	<% @tweets.each do |tweet| %>
-	  <p><%= tweet.content %></p>
-	  <form action="/tweet/<%= tweet.id %>" method="post">
-	    <input type="hidden" name="_method" value="delete">
-	    <input type="submit" value="delete">
-	  </form>
-	  <a href="/tweet/<%= tweet.id %>/edit"><button>Edit Tweet</button></a>
+	 	<%= erb :"/Tweet/tweet", locals: {tweet: tweet} %>
 	<%end%>
 </div>
 
