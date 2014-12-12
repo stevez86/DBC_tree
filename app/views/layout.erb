@@ -24,9 +24,9 @@
       <a href="/user/<%= @user.id %>/followers"><button class="headbutton">Followers</button></a>
       <a href="/user/<%= @user.id %>/following"><button class="headbutton">Following</button></a>
       <button class="right">Sign Out</button>
-      <form action="/tweet/new" method="post">
+      <form action="/user/<%=@user.id%>" method="post">
         <input class="tweet" type="submit" value="Tweet">
-        <textarea type="Text" class="input"></textarea>
+        <textarea type="text" name="content" class="tweet_box"></textarea>
       </form>
     </div>
   <% end %>
