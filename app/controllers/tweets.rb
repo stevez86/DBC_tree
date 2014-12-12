@@ -1,20 +1,3 @@
-=begin
-A user can tweet and delete a tweet
-
-
-create - post '/tweets'
-  tweet = Tweet.create(user_id, content)
-  redirect to user's profile
-
-
-delete - delete 'tweets/:tweet_id'
-  tweet = Tweet.find(id)
-  tweet.destroy
-
-  redirect to profile
-
-=end
-
 post '/tweets' do
   @user_id = session[:user_id]
   @content = params[:content]

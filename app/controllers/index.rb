@@ -8,16 +8,6 @@ get '/user/:id' do
   erb :'user/profile'
 end
 
-post '/tweet/new' do
-  @tweet = Tweet.create!(content: params[:content], user_id: params[:id])
-  redirect "/user/#{params[:id]}"
-end
-
-delete '/user/:id' do
-  @exploded_tweet = Tweet.destroy()
-  redirect "/user/#{@user.id}"
-end
-
 get '/user/:id/edit' do
   erb :'user/edit'
 end
