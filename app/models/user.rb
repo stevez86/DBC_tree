@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
   has_many :tweets
 
-
-
   include BCrypt
+
+  validates :username, uniqueness: true
+  validates :email, uniqueness: true
+  validates :username, :password, :email, presence: true
 
   def following
     followings = Following.where(follower_id: self.id)

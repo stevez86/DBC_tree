@@ -43,7 +43,7 @@ post '/signup' do
   end
 
   if error
-    flash[:signup_notice] = "#{error.to_s.sub('Validation failed: ','').gsub(',',' and')}"
+    flash[:signup_notice] = "#{error.to_s.sub('Validation failed: ','').sub(',',' and')}"
     redirect_home
   else
     login(new_user)
