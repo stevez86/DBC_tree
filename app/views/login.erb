@@ -1,7 +1,7 @@
 <div class="login-signup">
-  <div class="header">Welcome to the New Twitter ~ Nitter</div>
+  <div class="header"><%= site_name %></div>
   <div class="body">
-    <div id="login_error_message"><%= flash[:notice] if flash[:notice] %></div>
+
     <div class="login">
       <h2>Login:</h2>
       <form action="/login" method="post">
@@ -11,8 +11,9 @@
         <div class="label"><label>Password:</label></div>
         <input class="input" type="password" name="password">
         <br>
-        <input class="label" class="label" type="submit" value="Login">
+        <input class="button" type="submit" value="Login">
       </form>
+      <div class="login_error_message"><%= flash[:login_notice] if flash[:login_notice] %></div>
     </div>
     <div class="signup">
       <h2>Signup:</h2>
@@ -26,8 +27,9 @@
         <div class="label"><label>Password:</label></div>
         <input class="input" type="password" name="password">
         <br>
-        <input class="label" type="submit" value="Create Account">
+        <input class="button" type="submit" value="Create Account">
       </form>
+      <div class="login_error_message"><%= flash[:signup_notice] if flash[:signup_notice] %></div>
     </div>
   </div>
 </div>

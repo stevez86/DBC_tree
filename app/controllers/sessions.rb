@@ -12,7 +12,7 @@ post '/login' do
     @user = User.find_by_username(params[:username])
 
     if @user.password != params[:password]
-      flash[:notice] = "Incorrect Password"
+      flash[:login_notice] = "Incorrect password"
       redirect_home
     end
 
@@ -20,7 +20,11 @@ post '/login' do
   end
 
   if error
-    flash[:notice] = "Login Error #{error}"
+    if error.is_a? NoMethodError
+      flash[:login_notice] = "Invalid username"
+    else
+      flash[:login_notice] = "Login Error: #{error}"
+    end
     redirect_home
   else
     login(@user)
@@ -30,6 +34,7 @@ end
 
 
 post '/signup' do
+
   begin
     new_user = User.new(username: params[:username], email: params[:email])
     new_user.password = params[:password]
@@ -38,8 +43,7 @@ post '/signup' do
   end
 
   if error
-    # case
-    flash[:notice] = error
+    flash[:signup_notice] = "#{error.to_s.sub('Validation failed: ','').gsub(',',' and')}"
     redirect_home
   else
     login(new_user)
