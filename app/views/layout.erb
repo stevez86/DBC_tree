@@ -17,22 +17,19 @@
   <script src="/js/application.js"></script>
 
   <title></title>
-
-  <div class="heading">
-    <form action="/user/<%= @user.id %>/timeline" method="get">
-      <button class="headbutton">Timeline</button>
-    </form>
-    <form action="/user/<%= @user.id %>" method="get">
-      <button class="headbutton">Profile</button>
-    </form>
-    <form action="/user/<%= @user.id %>/followers" method="get">
-      <button class="headbutton">Followers</button>
-    </form>
-    <form action="/user/<%= @user.id %>/following" method="get">
-      <button class="headbutton">Following</button>
-    </form>
-      <button class="signout">Sign Out</button>
-  </div>
+  <% if authorized? %>
+    <div class="heading">
+      <a href="/user/<%= @user.id %>/timeline"><button class="headbutton">Timeline</button></a>
+      <a href="/user/<%= @user.id %>"><button class="headbutton">Profile</button></a>
+      <a href="/user/<%= @user.id %>/followers"><button class="headbutton">Followers</button></a>
+      <a href="/user/<%= @user.id %>/following"><button class="headbutton">Following</button></a>
+      <button class="right">Sign Out</button>
+      <form action="/tweet/new" method="post">
+        <input class="tweet" type="submit" value="Tweet">
+        <textarea type="Text" class="input"></textarea>
+      </form>
+    </div>
+  <% end %>
 </head>
 <body>
   <%= yield %>
