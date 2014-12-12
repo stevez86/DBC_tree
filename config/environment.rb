@@ -21,6 +21,7 @@ require "sinatra/reloader" if development?
 require 'rack-flash'
 
 require 'erb'
+require 'faker'
 
 require 'hirb'
 Hirb.enable
@@ -38,6 +39,7 @@ configure do
   set :root, APP_ROOT.to_path
   # See: http://www.sinatrarb.com/faq.html#sessions
   enable :sessions
+
   use Rack::Flash
   set :session_secret, ENV['SESSION_SECRET'] || 'this is a secret shhhhh'
 
