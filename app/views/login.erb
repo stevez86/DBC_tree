@@ -1,35 +1,21 @@
 <div class="login-signup">
-  <div class="header"><%= site_name %></div>
-  <div class="body">
-
-    <div class="login">
-      <h2>Login:</h2>
-      <form action="/login" method="post">
-        <div class="label"><label>Username:</label></div>
-        <input class="input" type="text" name="username">
-        <br>
-        <div class="label"><label>Password:</label></div>
-        <input class="input" type="password" name="password">
-        <br>
-        <input class="button" type="submit" value="Login">
-      </form>
-      <div class="login_error_message"><%= flash[:login_notice] if flash[:login_notice] %></div>
-    </div>
-    <div class="signup">
-      <h2>Signup:</h2>
-      <form action="/signup" method="post">
-        <div class="label"><label>Email:</label></div>
+  <div class="signup">
+    <h2><%= @signup? 'Signup:' : 'Login:' %></h2>
+    <form action="/<%= @signup? 'signup' : 'login' %>" method="post">
+      <% if @signup  %>
+        <div class="form_spacer"><label>Email:</label></div>
         <input class="input" type="text" name="email">
         <br>
-        <div class="label"><label>Username:</label></div>
-        <input class="input" type="text" name="username">
-        <br>
-        <div class="label"><label>Password:</label></div>
-        <input class="input" type="password" name="password">
-        <br>
-        <input class="button" type="submit" value="Create Account">
-      </form>
-      <div class="login_error_message"><%= flash[:signup_notice] if flash[:signup_notice] %></div>
-    </div>
+      <% end %>
+      <div class="form_spacer"><label>Username:</label></div>
+      <input class="input" type="text" name="username">
+      <br>
+      <div class="form_spacer"><label>Password:</label></div>
+      <input class="input" type="password" name="password">
+      <br>
+      <div class="form_spacer"></div>
+      <input class="button" type="submit" value="<%= @signup? 'Create Account' : 'Login' %>">
+    </form>
+    <div class="login_error_message"><%= flash[:signup_notice] if flash[:signup_notice] %></div>
   </div>
 </div>

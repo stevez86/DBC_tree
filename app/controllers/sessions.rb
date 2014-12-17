@@ -1,8 +1,14 @@
-
+get '/signup' do
+  # redirect_home if authorized?
+  # flash[:notice] = "test"
+  @signup = true;
+  erb :login
+end
 
 get '/' do
-  redirect_home if authorized?
+  # redirect_home if authorized?
   # flash[:notice] = "test"
+  @signup = false;
   erb :login
 end
 
