@@ -1,0 +1,86 @@
+body {
+  background-image: url("/imgs/SanFrancisco_0.jpg");
+  background-position: 50% 15%;
+  background-size: 2200px auto;
+}
+
+.login-signup {
+  text-align: center;
+  /*padding:15px;*/
+  /*height: 100%;*/
+  font-family: Avenir;
+/*  opacity: 1;*/
+}
+
+.login-signup .header {
+
+  display: inline-block;
+  color: white;
+  text-shadow: -1px 0 #990000, 0 1px #990000, 1px 0 #990000, 0 -1px #990000;
+  font-style: italic;
+  font-weight: 600;
+  /*width: 100%;*/
+  /*background-color: white;*/
+  opacity: 0.9;
+  font-size: 75px;
+  /*width: 400px;*/
+  padding: 5px 15px 5px 15px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  border-radius: 20px;
+  /*border-bottom: 1px solid #B2B2B2;*/
+}
+
+.login-signup h2 {
+  font-size: 20px;
+  padding-bottom: 5px;
+  margin: 0px;
+}
+
+.login, .signup {
+  background-color: white;
+  opacity: 0.75;
+  text-align: left;
+  vertical-align: top;
+  display: inline-block;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid #990000;
+  margin: 60px 60px 20px 60px;
+}
+
+.button {
+  border-radius: 5px;
+  border: 1px solid #990000;
+  padding: 5px 10px 5px 10px;
+  background-color: white;
+  margin-top: 10px;
+}
+
+.button:hover {
+  border-radius: 5px;
+  border: 1px solid #990000;
+  background-color: grey;
+  opacity: 1;
+}
+
+.input {
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #990000;
+}
+
+.login form, .signup form {
+  padding: 10px 0px 10px 0px;
+}
+
+.login_error_message {
+  vertical-align: center;
+  color: red;
+  max-width: 180px;
+/*  padding-top: 10px;*/
+  /*padding-bottom: 10px;*/
+  /*height: 31px;*/
+  font-size: 18px;
+}
