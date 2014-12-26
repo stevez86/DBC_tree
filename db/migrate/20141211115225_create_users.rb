@@ -3,16 +3,13 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string :name
       t.string :email
-      t.integer :mentor_line    #user id of first person
-      t.string :password_hash
+      t.integer :lineage_id    #user id of first person
+      t.integer :current_cohort_id
+      # t.string :password_hash
 
       t.timestamps
     end
   end
 end
 
-
-# cohort
-# -name
-# -graduation date
 

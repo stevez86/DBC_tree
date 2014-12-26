@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  $('.row').slick({
+  $('.cohort').slick({
     dots: false,
     infinite: true,
     centerMode: true,
@@ -10,29 +10,29 @@ $(document).ready(function() {
     centerPadding: '10px'
   });
 
-  var centerOnUser = function(userID) {
-    cohort_id =
+  // var centerOnUser = function(userID) {
+  //   cohort_id =
 
-    $.scrollTo(".r9", {duration:1200, offset:-80, easing:'easeInOutExpo', onAfter: function() {
-        setTimeout(function() {
-          centerUser(userID);
-        }, 0);
-      }
-    });
-  };
+  //   $.scrollTo(".r9", {duration:1200, offset:-80, easing:'easeInOutExpo', onAfter: function() {
+  //       setTimeout(function() {
+  //         centerUser(userID);
+  //       }, 0);
+  //     }
+  //   });
+  // };
 
 
-  var goToRow = function(rowID) {
-    $.scrollTo(".r"+ rowID, {duration:400, offset:-80, easing:'easeInOutExpo'});
-  }
+  // var goToRow = function(rowID) {
+  //   $.scrollTo(".r"+ rowID, {duration:400, offset:-80, easing:'easeInOutExpo'});
+  // }
 
-  var centerUser = function(userID) {
-    $("#" + userID).children().click()
-  }
+  // var centerUser = function(userID) {
+  //   $("#" + userID).children().click()
+  // }
 
-  $("#cohort").on("click", function () {
-    centerOnUser("101")
-  });
+  // $("#cohort").on("click", function () {
+  //   centerOnUser("101")
+  // });
 
 
 
