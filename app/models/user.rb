@@ -1,39 +1,20 @@
 class User < ActiveRecord::Base
-  has_many :tweets
+
+  # follower_follows "names" the Follow join table for accessing through the follower association
+  has_many :mentor_ments, foreign_key: :mentee_id, class_name: "Mentor"
+  # source: :follower matches with the belong_to :follower identification in the Follow model
+  has_many :mentors, through: :mentor_ments, source: :mentor
+
+  # mentee_follows "names" the Follow join table for accessing through the mentee association
+  has_many :mentee_follows, foreign_key: :mentor_id, class_name: "Mentor"
+  # source: :mentee matches with the belong_to :mentee identification in the Follow model
+  has_many :mentees, through: :mentee_ments, source: :mentee
 
   include BCrypt
 
   validates :username, uniqueness: true
   validates :email, uniqueness: true
   validates :username, :password, :email, presence: true
-
-  def following
-    followings = Following.where(follower_id: self.id)
-    followed_ids = followings.pluck(:user_id)
-    followed_ids.map do |followed_id|
-      User.find(followed_id)
-    end
-  end
-
-  def follow(user)
-    unless self.following.include? user
-      Following.create(user_id: user.id, follower_id: self.id)
-    end
-  end
-
-  def followers
-    followings = Following.where(user_id: self.id)
-    follower_ids = followings.pluck(:follower_id)
-    follower_ids.map do |follower_id|
-      User.find(follower_id)
-    end
-  end
-
-  def add_follower(user)
-    unless self.followers.include? user
-      Following.create(user_id: self.id, follower_id: user.id)
-    end
-  end
 
   def password
     @password ||= Password.new(password_hash)

@@ -1,3 +1,8 @@
+get '/' do
+  @signup = false;
+  erb :grid
+end
+
 get '/users/:id' do
   @user = User.find(params[:id])
   @tweets = @user.tweets.reverse
