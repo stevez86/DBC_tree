@@ -1,14 +1,19 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
+      # t.string :type
       t.string :name
       t.string :email
-      t.integer :lineage_id    #user id of first person
-      t.integer :current_cohort_id
-      # t.string :password_hash
+      t.string :password_hash
+      t.integer :lineage_id
+      t.integer :mentor_id
+      t.integer :cohort_id
 
       t.timestamps
     end
+
+    add_index :users, :mentor_id
+    add_index :users, :cohort_id
   end
 end
 
