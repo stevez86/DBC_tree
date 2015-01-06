@@ -29,31 +29,30 @@ class User < ActiveRecord::Base
   def mentor=(new_mentor)
     self.mentor_id = new_mentor.id
     self.lineage_id = new_mentor.lineage_id
-    set_lineage
+    set_children
     self.save!
   end
 
-  def set_lineage
-    # User.reload
+  # def lineage_id=(new_lineage_id)
+  #   self.lineage_id = new_lineage_id
+  #   self.save!
+  #   self.mentees.each do |mentee|
+  #     mentee.lineage_id = new_lineage_id
+  #     mentee.save!
+  #   end
+  # end
+
+  def set_children
     all_mentees = self.mentees
     new_mentees = all_mentees
-    puts "SELF: #{self.name}, #{self.id}"
-
-    puts new_mentees.length
 
     while new_mentees.length > 0
       to_add = []
       new_mentees.each do |new_mentee|
-        puts "NEW MENTEE: #{new_mentee.name}, #{new_mentee.id}"
-        all_mentees << new_mentee
         to_add << new_mentee.mentees.to_a
       end
-      new_mentees = to_add.flatten
-      all_mentees << to_add.flatten
-
-
-
-
+      new_mentees = to_add.flatten!
+      all_mentees << to_add
     end
 
     all_mentees.each do |mentee|
@@ -63,6 +62,10 @@ class User < ActiveRecord::Base
   end
 
   def graduation_date
+    # TODO
+  end
+
+  def last_cohort
     # TODO
   end
 end

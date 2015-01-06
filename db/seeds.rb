@@ -3,11 +3,11 @@ require 'faker'
 cohorts = []
 students = []
 
-50.times do
-  students << User.create(name: Faker::Name.name)
+500.times do
+  students << User.create(name: Faker::Name.name, email: Faker::Name.name)
 end
 
-5.times do
+12.times do
   cohorts << Cohort.create(name: Faker::App.name)
 end
 
@@ -19,7 +19,7 @@ end
 
 students = User.all
 cohorts = Cohort.all
-puts "TESTTESTETTSGDJSHGKJFKJSHFKSHFKSJDFHHJ!!!!!!!!!!!!!!"
+# puts "TESTTESTETTSGDJSHGKJFKJSHFKSHFKSJDFHHJ!!!!!!!!!!!!!!"
 
 cohorts.each_with_index do |cohort, i|
   if i < cohorts.length - 1
@@ -29,17 +29,3 @@ cohorts.each_with_index do |cohort, i|
     end
   end
 end
-
-# students = User.all
-
-# students.each do |student|
-#   highest_mentor = student
-
-#   while highest_mentor.mentor != nil
-#     puts highest_mentor.mentor
-#     highest_mentor = highest_mentor.mentor
-#   end
-
-#   student.lineage_id = highest_mentor.id
-#   student.save!
-# end

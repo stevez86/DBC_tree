@@ -10,6 +10,18 @@ $(document).ready(function() {
     centerPadding: '10px'
   });
 
+  $('.user').click(function(){
+    setUserHighlight(this.id);
+  });
+
+  var setUserHighlight = function(userID) {
+    var new_name = $("#" + userID + " .name")[0].innerHTML;
+
+    //TODO : insert ajax
+
+    $("#highlight_name")[0].innerHTML = new_name;
+  };
+
   // var centerOnUser = function(userID) {
   //   cohort_id =
 

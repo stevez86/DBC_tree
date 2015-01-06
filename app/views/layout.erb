@@ -17,9 +17,10 @@
 
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-  <script src="/js/application.js"></script>
-  <script type="text/javascript" src="/slick/slick.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/1.4.14/jquery.scrollTo.min.js"></script>
+  <script type="text/javascript" src="/slick/slick.min.js"></script>
+  <script src="/js/application.js"></script>
+
 
   <title>Steve</title>
 </head>
@@ -38,14 +39,13 @@
 </nav>
 </header>
 <aside><div class="sidebar">
-  <div class="user_focus"></div>
-  <img src= ""></img>
-  <ul>
-    <li>Name</li>
-    <li>Job</li>
-    <li>email</li>
-    <li>etc...</li>
-  </ul>
+  <div class="user_highlight">
+    <img src=""></img>
+    <ul>
+      <li id="highlight_name">Name</li>
+      <li id="highlight_email">email</li>
+    </ul>
+  </div>
 </div></aside>
 <div class="main">
 <%= yield %>
