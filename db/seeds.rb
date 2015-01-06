@@ -5,7 +5,7 @@ students = []
 
 500.times do
   sex = ["men","women"].shuffle.first
-  profile_img = "https://randomuser.me/api/portraits/" + sex.to_s + "/" + rand(99).to_s + ".jpg"
+  profile_img = "https://randomuser.me/api/portraits/" + sex.to_s + "/" + rand(96).to_s + ".jpg"
   students << User.new(name: Faker::Name.name, email: Faker::Internet.email, city: Faker::Address.city, profile_image: profile_img.to_s)
 end
 
