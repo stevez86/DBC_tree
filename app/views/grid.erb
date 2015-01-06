@@ -3,7 +3,7 @@
     <div class="cohort-title"><%= cohort.name %></div>
     <div class="cohort c<%= cohort_index %>">
         <% cohort.users.each do |user| %>
-        <div class="user" data-id=<%= user.id %> data-lineage=<%= user.lineage_id %> ><img data-lazy=<%= user.profile_image %>/><div class="name"><%= user.name %></div></div>
+        <div class="user" data-id=<%= user.id %> data-lineage=<%= user.lineage_id %> ><img src="<%= user.profile_image %>" /><div class="name"><%= user.name %></div></div>
         <% end %>
     </div>
 </div>

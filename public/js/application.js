@@ -1,30 +1,46 @@
 $(document).ready(function() {
 
-  $('.user').click(function(){
+  $("#your-cohort-link").on("click", function () {
+    $(".cohort:has([data-id=50])").show(800);
+    $(".cohort:not(:has([data-id=50]))").hide(800);
+    centerOnUser("50");
+  });
 
+  $(".cohort-title").on("click", function () {
+    $(this).parent().children(".cohort").toggle(400);
+  });
+
+  $('.user').click(function(){
     setUserHighlight($(this).data("id"));
-    // console.log($(this).data("id"));
+  });
+
+  $('.user').hover(function(){
+    $(this).addClass('transition');
+  }, function() {
+    $(this).removeClass('transition');
   });
 
   var setUserHighlight = function(userID) {
+    $('.highlight_user').removeClass('highlight_user');
+    $("[data-id="+userID+"]").addClass('highlight_user');
+
     var new_name = $("[data-id="+userID+"] .name")[0].innerHTML;
     var new_image = $("[data-id="+userID+"] img").attr("src");
 
-    $("#highlight_name").hide(50);
-    $("#highlight_name")[0].innerHTML = new_name;
-    $("#highlight_name").show(400);
     $(".sidebar").show("fade");
-    $("#highlight_image").attr("src",new_image);
-    $("#highlight_email").hide(400);
-    $("#highlight_city").hide(400);
 
-    $.ajax({
-      url: 'http://api.randomuser.me/',
-      dataType: 'json',
-      success: function(data){
-        console.log(data.results["email"]);
-      }
+    $("#highlight_image").fadeOut(300, function() {
+      $("#highlight_image").attr("src",new_image);
+      $("#highlight_image").fadeIn(300);
     });
+
+    $("#highlight_name").hide(200, function() {
+      $(this)[0].innerHTML = new_name;
+      $(this).show(300);
+    });
+
+    $("#highlight_email").hide(150);
+    $("#highlight_city").hide(100);
 
     $.ajax({
       type: 'get',
@@ -33,34 +49,15 @@ $(document).ready(function() {
     }).success( function(user) {
       $("#highlight_email").text(user.email);
       $("#highlight_city").text(user.city);
-      $("#highlight_email").show(400);
-      $("#highlight_city").show(400);
+      $("#highlight_email").show(100);
+      $("#highlight_city").show(150);
     })
   };
 
-  // var centerOnUser = function(userID) {
-  //   cohort_id =
-
-  //   $.scrollTo(".r9", {duration:1200, offset:-80, easing:'easeInOutExpo', onAfter: function() {
-  //       setTimeout(function() {
-  //         centerUser(userID);
-  //       }, 0);
-  //     }
-  //   });
-  // };
-
-
-  // var goToRow = function(rowID) {
-  //   $.scrollTo(".r"+ rowID, {duration:400, offset:-80, easing:'easeInOutExpo'});
-  // }
-
-  // var centerUser = function(userID) {
-  //   $("#" + userID).children().click()
-  // }
-
-  // $("#cohort").on("click", function () {
-  //   centerOnUser("101")
-  // });
+  var centerOnUser = function(userID) {
+    $("[data-id="+userID+"]").click();
+    $.scrollTo("[data-id="+userID+"]", {duration:1200, offset:-72, easing:'easeInOutExpo'});
+  };
 
   $('.cohort').slick({
     // accessibility: false,

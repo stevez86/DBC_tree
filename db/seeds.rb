@@ -3,15 +3,15 @@ require 'faker'
 cohorts = []
 students = []
 
-750.times do
+500.times do
   sex = ["men","women"].shuffle.first
-  # profile_img = "https://randomuser.me/api/portraits/" + sex.to_s + "/" + rand(99).to_s + ".jpg"
-  students << User.create(name: Faker::Name.name, email: Faker::Internet.email)
+  profile_img = "https://randomuser.me/api/portraits/" + sex.to_s + "/" + rand(99).to_s + ".jpg"
+  students << User.new(name: Faker::Name.name, email: Faker::Internet.email, city: Faker::Address.city, profile_image: profile_img.to_s)
 end
 
 students << User.create(name: "Steve Zimmerman", email: "szman86@gmail.com")
 
-25.times do
+15.times do
   cohorts << Cohort.create(name: Faker::App.name)
 end
 
