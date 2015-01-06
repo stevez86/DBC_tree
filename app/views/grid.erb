@@ -1,0 +1,10 @@
+<% @cohorts.each_with_index do |cohort, cohort_index| %>
+<div class="cohort-container">
+    <div class="cohort-title"><%= cohort.name %></div>
+    <div class="cohort c<%= cohort_index %>">
+        <% cohort.users.each do |user| %>
+        <div id=<%= user.id.to_s %> data-lineage=<%= user.lineage_id.to_s %> class="user"><img data-lazy="imgs/smiley.png"/><div class="name"><%= user.name %></div></div>
+        <% end %>
+    </div>
+</div>
+<% end %>

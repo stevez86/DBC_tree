@@ -1,19 +1,10 @@
 get '/signup' do
-  # redirect_home if authorized?
-  # flash[:notice] = "test"
   @signup = true;
-  erb :login
+  erb :tree
 end
 
-get '/' do
-  # redirect_home if authorized?
-  # flash[:notice] = "test"
-  @signup = false;
-  erb :login
-end
 
 post '/login' do
-
   begin
     @user = User.find_by_username(params[:username])
 

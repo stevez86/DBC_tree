@@ -12,26 +12,43 @@
   -->
   <link rel="stylesheet" href="/css/application.css">
   <link rel="stylesheet" href="/css/sessions.css">
+  <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/1.4.14/jquery.scrollTo.min.js"></script>
+  <script type="text/javascript" src="/slick/slick.min.js"></script>
   <script src="/js/application.js"></script>
 
-  <title></title>
-  <% if authorized? %>
-    <div class="heading">
-      <a href="/user/<%= @user.id %>/timeline"><button class="headbutton">Timeline</button></a>
-      <a href="/user/<%= @user.id %>"><button class="headbutton">Profile</button></a>
-      <a href="/user/<%= @user.id %>/followers"><button class="headbutton">Followers</button></a>
-      <a href="/user/<%= @user.id %>/following"><button class="headbutton">Following</button></a>
-      <button class="right">Sign Out</button>
-      <form action="/tweets" method="post">
-        <input class="tweet" type="submit" value="Tweet">
-        <textarea type="text" name="content" class="tweet_box" maxlength="140"></textarea>
-      </form>
-    </div>
-  <% end %>
+
+  <title>Steve</title>
 </head>
 <body>
-  <%= yield %>
+<header><nav>
+  <ul class="nav_links">
+    <li>LOGO</li>
+  </ul>
+  <ul class="nav_user">
+    <li><a href ="#" id="cohort">Your Cohort</a></li>
+    <li><a href ="#">Your DBC Family Tree</a></li>
+    <li><a href ="#">Your Profile</a></li>
+    <li><a href ="#">Sign Out</a></li>
+  </ul>
+  </ul>
+</nav>
+</header>
+<aside><div class="sidebar">
+  <div class="user_highlight">
+    <img src=""></img>
+    <ul>
+      <li id="highlight_name">Name</li>
+      <li id="highlight_email">email</li>
+    </ul>
+  </div>
+</div></aside>
+<div class="main">
+<%= yield %>
+</div>
 </body>
 </html>

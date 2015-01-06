@@ -1,38 +1,20 @@
 class User < ActiveRecord::Base
-  has_many :tweets
 
   include BCrypt
 
-  validates :username, uniqueness: true
-  validates :email, uniqueness: true
-  validates :username, :password, :email, presence: true
+  belongs_to :cohort
 
-  def following
-    followings = Following.where(follower_id: self.id)
-    followed_ids = followings.pluck(:user_id)
-    followed_ids.map do |followed_id|
-      User.find(followed_id)
-    end
-  end
+  has_many :mentees, class_name: "User", foreign_key: "mentor_id"
+  belongs_to :mentor, class_name: "User", inverse_of: :mentees
 
-  def follow(user)
-    unless self.following.include? user
-      Following.create(user_id: user.id, follower_id: self.id)
-    end
-  end
+  # validates :email, uniqueness: true
+  # validates :password, :email, presence: true
 
-  def followers
-    followings = Following.where(user_id: self.id)
-    follower_ids = followings.pluck(:follower_id)
-    follower_ids.map do |follower_id|
-      User.find(follower_id)
-    end
-  end
+  after_initialize :defaults
 
-  def add_follower(user)
-    unless self.followers.include? user
-      Following.create(user_id: self.id, follower_id: user.id)
-    end
+  def defaults
+    self.lineage_id ||= self.id
+    self.save!
   end
 
   def password
@@ -42,5 +24,48 @@ class User < ActiveRecord::Base
   def password=(new_password)
     @password = Password.create(new_password)
     self.password_hash = @password
+  end
+
+  def mentor=(new_mentor)
+    self.mentor_id = new_mentor.id
+    self.lineage_id = new_mentor.lineage_id
+    set_children
+    self.save!
+  end
+
+  # def lineage_id=(new_lineage_id)
+  #   self.lineage_id = new_lineage_id
+  #   self.save!
+  #   self.mentees.each do |mentee|
+  #     mentee.lineage_id = new_lineage_id
+  #     mentee.save!
+  #   end
+  # end
+
+  def set_children
+    all_mentees = self.mentees
+    new_mentees = all_mentees
+
+    while new_mentees.length > 0
+      to_add = []
+      new_mentees.each do |new_mentee|
+        to_add << new_mentee.mentees.to_a
+      end
+      new_mentees = to_add.flatten!
+      all_mentees << to_add
+    end
+
+    all_mentees.each do |mentee|
+      mentee.lineage_id = self.lineage_id
+      mentee.save!
+    end
+  end
+
+  def graduation_date
+    # TODO
+  end
+
+  def last_cohort
+    # TODO
   end
 end

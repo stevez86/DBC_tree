@@ -1,10 +1,6 @@
 
 helpers  do
 
-  def site_name
-    '#' + (Faker::Company.bs).split.sample(rand(1..3)).map(&:capitalize).join(' ').gsub(/[aeiouy]*$/,'') + "itter"
-  end
-
   def authorized?
     !!session[:user_id]
   end
@@ -12,6 +8,7 @@ helpers  do
   def login(user)
     session[:user_id] = user.id
     session[:username] = user.username
+    # TODO
   end
 
   def logout
