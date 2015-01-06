@@ -61,6 +61,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  # def profile_image
+  #   return self.profile_image if self.profile_image != null
+
+  #   hash = Digest::MD5.hexdigest(self.email)
+  #   default = "&d=" + URI::encode('http://static.sepakbola.com/images/pemain/143823.jpg')
+  #   "http://www.gravatar.com/avatar/" + hash + "?s=180" + default
+  # end
+
   def graduation_date
     # TODO
   end
