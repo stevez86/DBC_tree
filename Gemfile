@@ -19,6 +19,7 @@ gem 'faker'
 gem 'shotgun'
 gem 'rack-flash3'
 gem 'sinatra-redirect-with-flash'
+# gem 'active_support/inflector'
 
 gem 'hirb'
 
