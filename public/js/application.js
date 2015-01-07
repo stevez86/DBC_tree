@@ -14,7 +14,7 @@ $(document).ready(function() {
   });
 
   $("#your-link").on("click", function () {
-    scrollToUser("55");
+    scrollToUser(currentUser.id);
     // scrollToUser(150);
     // clickUser(250);
     // console.log(currentUser.id);
