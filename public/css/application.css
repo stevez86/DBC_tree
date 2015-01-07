@@ -28,7 +28,7 @@ nav li {
   padding: 5px 8px;
   margin-right: 5px;
   margin-left: 5px;
-  margin-top: 3px;
+  margin-top: 5px;
   border-radius: 10px;
   border: 1px dotted black;
   /*line-height: 30px;*/
@@ -42,6 +42,7 @@ nav li {
 
 nav li:hover {
   background-color: #7A7A7A;
+  color: white;
 }
 
 .nav_user {
@@ -74,7 +75,6 @@ nav {
   background-color: #4C4C4C;
   height: 40px;
   text-decoration: none;
-
 }
 
 .sidebar {
@@ -119,24 +119,22 @@ nav {
 }
 
 .cohort-container {
-  /*position: relative;*/
-  /*border: 1px solid black;*/
-  /*height: 200px;*/
-  /*border-left: 1px dotted black;*/
   border-top: 1px dotted #BEBEBE;
-  /*border-bottom: 1px dotted black;*/
 }
 
 .cohort-title {
-  /*border: 1px solid black;*/
   display: block;
-  color: black;
   line-height: 24px;
   vertical-align: middle;
   padding: 2px 0px;
   cursor: pointer;
-  /*border-bottom: 1px dotted black;*/
-  /*border-top: 1px dotted black;*/
+  background-color: #FFFFCC;
+  text-align: center;
+  color: black;
+}
+
+.cohort-title:hover {
+  background-color: #FFFF99;
 }
 
 .user .name {
@@ -155,11 +153,11 @@ nav {
   text-align: center;
 }
 
-.cohort-view {
+.cohort:not(.slick-initialized) {
   margin: 0px 0px 10px 190px;
 }
 
-.cohort-view .user{
+.cohort:not(.slick-initialized) .user{
   vertical-align: top;
   width: 105px;
   height: 140px;
@@ -187,14 +185,6 @@ nav {
   -ms-transition: all .2s ease-in-out;
 }
 
-.cohort-title {
-  background-color: #FFFFCC;
-  text-align: center;
-  /*padding: 2px;*/
-  color: black;
-  /*margin-bottom: 2px;*/
-}
-
 .user_highlight ul {
   list-style-type: none;
   padding: 0;
@@ -207,17 +197,6 @@ nav {
   padding: 2px 0px;
 }
 
-.transition {
-  opacity: 1;
-}
-
-.transition img {
-    -webkit-transform: scale(1.10);
-    -moz-transform: scale(1.10);
-    -o-transform: scale(1.10);
-    transform: scale(1.10);
-}
-
 .highlight_user {
   opacity: 1;
 }
@@ -227,7 +206,11 @@ nav {
     -moz-transform: scale(1.10);
     -o-transform: scale(1.10);
     transform: scale(1.10);
-    border: 2px solid yellow;
+    /*border: 3px solid yellow;*/
+}
+
+.highlight_title {
+  background-color: #FFFF66;
 }
 
 .current_family_user {
@@ -239,5 +222,10 @@ nav {
   -moz-transform: scale(1.10);
   -o-transform: scale(1.10);
   transform: scale(1.10);
-  border: 3px solid yellow;
+  border: 3px solid #4C4C4C;
+}
+
+.filter-enabled {
+  background-color: #FFFFCC;
+  color: #4C4C4C;
 }

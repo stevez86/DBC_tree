@@ -22,7 +22,7 @@
   <script src="/js/application.js"></script>
 
 
-  <title>Steve</title>
+  <title>DBC Tree</title>
 </head>
 <body>
 <header><nav>
@@ -30,9 +30,10 @@
     <li>LOGO</li>
   </ul>
   <ul class="nav_user">
-    <li><a id="your-cohort-link">Your Cohort</a></li>
-    <li><a id="your-family-link">Your DBC Family Tree</a></li>
-    <li><a>Sign Out</a></li>
+    <li id="your-link"><%= current_user_name %></li>
+    <li id="your-cohort-link"><%= @current_user_cohort.name %></li>
+    <li id="your-family-link">Your DBC Family Tree</li>
+    <li>Sign Out</li>
   </ul>
   </ul>
 </nav>
@@ -44,7 +45,6 @@
       <li id="highlight_name"></li>
       <!-- <li id="highlight_email"></li> -->
       <!-- <li id="highlight_city"></li> -->
-      <li>Mentor:</li>
       <li id="highlight_mentor"></li>
     </ul>
   </div>

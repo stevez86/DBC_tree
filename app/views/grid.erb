@@ -1,6 +1,6 @@
 <% @cohorts.each_with_index do |cohort, cohort_index| %>
 <div class="cohort-container">
-    <div class="cohort-title"><%= cohort.name %></div>
+    <div class="cohort-title"><%= cohort.name + "  -  " + cohort.graduation_date.strftime('%B %-d, %Y') %></div>
     <div class="cohort c<%= cohort_index %>">
         <% cohort.users.each do |user| %>
         <div class="user" data-id=<%= user.id %> data-lineage=<%= user.lineage_id %> ><img src="<%= user.profile_image %>" /><div class="name"><%= user.name %></div></div>

@@ -7,8 +7,6 @@ helpers  do
 
   def login(user)
     session[:user_id] = user.id
-    session[:username] = user.username
-    # TODO
   end
 
   def logout
@@ -16,12 +14,12 @@ helpers  do
     redirect_home
   end
 
-  def session_username
-    session[:username]
+  def current_user_id
+    session[:user_id]
   end
 
-  def session_user_id
-    session[:user_id]
+  def current_user_name
+    @current_user.name
   end
 
   def redirect_home
