@@ -15,9 +15,6 @@ $(document).ready(function() {
 
   $("#your-link").on("click", function () {
     scrollToUser(currentUser.id);
-    // scrollToUser(150);
-    // clickUser(250);
-    // console.log(currentUser.id);
   });
 
   $("#your-cohort-link").on("click", function () {
@@ -40,7 +37,7 @@ $(document).ready(function() {
   // });
 
   $('.user').click(function(){
-    console.log("user clicked",$(this).data("id"));
+    // console.log("user clicked",$(this).data("id"));
     // console.log($(this).data("id"));
     highlightUser($(this).data("id"));
   });
@@ -120,12 +117,13 @@ $(document).ready(function() {
   }
 
   function scrollToUser(userID) {
-    clickUser(userID);
     scrollToCohort(userID);
+    getCohort(userID).slickGoTo(getUserIndex(userID));
+    highlightUser(userID);
+  }
 
-    // setTimeout(function() {
-    //     clickUser(userID);
-    //   }, 1500);
+  function getUserIndex(userID) {
+    return $("[data-id=401].user:not(.slick-cloned)").attr("index");
   }
 
   function scrollToCohort(userID) {
@@ -147,28 +145,22 @@ $(document).ready(function() {
     $(".filter-enabled").removeClass("filter-enabled");
   }
 
-  function clickUser(userID) {
-
-    // $("[data-id="+userID+"]")[0].click();
-    var test = $("[data-id="+userID+"]");
-    console.log("click",test);
-
-    test.click();
-    // test.css("background-color","red");
-  }
-
   function reSlick() {
     $(".cohort:not(.slick-initialized)").slick({
       arrows: false,
       dots: false,
-      draggable: false,
-      speed: 800,
+      adaptiveHeight: true,
+      // draggable: false,
+      speed: 1000,
       infinite: true,
       centerMode: true,
       focusOnSelect: true,
-      slidesToShow: 15,
-      easing: "easeInOutExpo",
-      swipeToSlide: false,
+      slidesToShow: 16,
+      slidesToScroll: 5,
+      // autoplay: true,
+      autoplaySpeed: 2000,
+      // easing: "easeOutElastic",
+      // swipeToSlide: false,
       responsive:
       [
         {
