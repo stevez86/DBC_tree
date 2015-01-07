@@ -153,7 +153,8 @@ $(document).ready(function() {
     var test = $("[data-id="+userID+"]");
     console.log("click",test);
 
-    test.trigger("click");
+    test.click();
+    // test.css("background-color","red");
   }
 
   function reSlick() {
