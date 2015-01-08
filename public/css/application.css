@@ -81,7 +81,7 @@ nav {
   z-index: 9999;
   position: fixed;
   width: 20%;
-  max-width: 180px;
+  max-width: 240px;
   top: 40px;
   left: 0;
   /*border-right: 1px dotted black;*/
@@ -147,10 +147,13 @@ nav {
   transition: opacity .05s ease-in-out;
   -moz-transition: opacity .05s ease-in-out;
   -webkit-transition: opacity .05s ease-in-out;
-  margin: 8px;
+  margin: 4px 2px;
   display: inline-block;
   text-align: center;
   min-height: 130px;
+  border-radius: 15px;
+  /*background-color: blue;*/
+  /*height: 200px;*/
 }
 
 .cohort-container {
@@ -161,6 +164,8 @@ nav {
 .cohort {
   margin-left: auto;
   margin-right: auto;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 .cohort:not(.slick-initialized) {
@@ -188,12 +193,9 @@ nav {
   height: auto;
   margin-left: auto;
   margin-right: auto;
-  /*margin-bottom: 2px;*/
-  /*margin-top: 4px;*/
   border-radius: 100px;
   border: 2px solid #FFFFCC;
-  /*cursor: pointer;*/
-  /*color: transparent;*/
+  cursor: pointer;
   -webkit-transition: all .2s ease-in-out;
   -moz-transition: all .2s ease-in-out;
   -o-transition: all .2s ease-in-out;
@@ -247,5 +249,5 @@ nav {
 }
 
 .selected_user img {
-  border: 3px solid green;
+  border: 2px solid green;
 }

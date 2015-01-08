@@ -89,8 +89,8 @@ $(document).ready(function() {
     cohort.show(400);
 
     setTimeout(function() {
-      scrollToUser(userID);
-    }, 300);
+      scrollToCohort(userID);
+    }, 400);
   }
 
   function highlightUserFamily(userID) {
@@ -135,9 +135,13 @@ $(document).ready(function() {
   }
 
   function scrollToUser(userID) {
+    $(".cohort:has([data-id="+ userID +"])").show(200);
     scrollToCohort(userID);
     getCohort(userID).slickGoTo(getUserIndex(userID));
     highlightUser(userID);
+    setTimeout(function() {
+      $("[data-id="+userID+"] img").effect("highlight",{color: "red"})
+    }, 300);
   }
 
   function getUserIndex(userID) {
@@ -168,7 +172,7 @@ $(document).ready(function() {
       arrows: false,
       dots: false,
       adaptiveHeight: true,
-      // draggable: false,
+      draggable: false,
       speed: 800,
       infinite: true,
       centerMode: true,
