@@ -10,7 +10,6 @@ $(document).ready(function() {
   }).success( function(current_user) {
     currentUser.id = current_user.id;
     currentUser.lineage_id = current_user.lineage_id;
-    // console.log("hi",current_user);
   });
 
   $("#your-link").on("click", function () {
@@ -19,26 +18,27 @@ $(document).ready(function() {
 
   $("#your-cohort-link").on("click", function () {
     if ($(this).hasClass("filter-enabled")) {
-      unHighlightUserCohort(currentUser.id);
+      resetInterface();
+      scrollToUser(currentUser.id);
     } else {
-      highlightUserCohort(currentUser.id);
+      showUserCohort(currentUser.id);
     }
+    //TODO
+    $(this).toggleClass("filter-enabled");
   });
 
-  // //TODO
-  // $("#your-family-link").on("click", function () {
-  //   $(".cohort:has([data-lineage=268])").show(600);
-  //   $(".cohort:not(:has([data-lineage=268]))").hide(400);
-
-  //   setTimeout(function() {
-  //       scrollToCohort("50");
-  //       $(".cohort").slickFilter("[data-lineage=268]");
-  //     }, 600);
-  // });
+  $("#your-family-link").on("click", function () {
+    if ($(this).hasClass("filter-enabled")) {
+      resetInterface();
+      scrollToUser(currentUser.id);
+    } else {
+      showUserFamily(currentUser.id);
+    }
+    //TODO
+    $(this).toggleClass("filter-enabled");
+  });
 
   $('.user').click(function(){
-    // console.log("user clicked",$(this).data("id"));
-    // console.log($(this).data("id"));
     highlightUser($(this).data("id"));
   });
 
@@ -53,12 +53,28 @@ $(document).ready(function() {
     $(this).parent().children(".cohort").toggle(200);
   });
 
-  function highlightUserCohort(userID) {
-    $("#your-cohort-link").addClass("filter-enabled");
+  //TODO
+  function showUserFamily(userID) {
+    var lineageID = getLineage(userID);
+    //hide irrelevent cohorts
+    $(".cohort:not(:has([data-lineageID="+lineageID+"]))").hide();
+    //unslick relevent
+    $(".cohort:has([data-lineageID="+lineageID+"])").unslick();
+    //hide irrelevent users
+    $(".user:not(:has([data-lineageID="+lineageID+"]))").hide();
+    //CENTER REMAINING?
+  }
+
+  //TODO
+  function getLineage(userID) {
+    return $("[data-id="+userID+"]").data("lineage");
+  }
+
+  function showUserCohort(userID) {
     var cohort = getCohort(userID);
     cohort.unslick();
-    $(".cohort:not(:has([data-id="+userID+"]))").hide(400);
-    cohort.show(400);
+    $(".cohort:not(:has([data-id="+userID+"]))").hide();
+    cohort.show();
 
     setTimeout(function() {
       scrollToCohort(userID);
@@ -69,20 +85,17 @@ $(document).ready(function() {
     }, 900);
   }
 
-  function unHighlightUserCohort() {
-    resetInterface();
-    scrollToUser(currentUser.id);
-  }
-
-  function highlightUserTree(userID) {
+  function highlightUserFamily(userID) {
     var lineage = $("[data-id="+userID+"]").data("lineage");
     $('.current_family_user').removeClass('current_family_user');
     $("[data-lineage="+lineage+"]").addClass('current_family_user');
   }
 
   function highlightUser(userID) {
-    console.log("highlightUser",userID);
-    highlightUserTree(userID);
+    //TODO
+    //highlight user border a certain color
+    //highlight those in family with different color
+    highlightUserFamily(userID);
     setSidebar(userID);
   }
 
@@ -127,7 +140,6 @@ $(document).ready(function() {
   }
 
   function scrollToCohort(userID) {
-    // console.log("scrollToCohort");
     $.scrollTo(".cohort:has([data-id="+ userID +"])", {duration: 700, offset:-69, easing:'easeInOutExpo'});
   }
 
@@ -151,7 +163,7 @@ $(document).ready(function() {
       dots: false,
       adaptiveHeight: true,
       // draggable: false,
-      speed: 1000,
+      speed: 800,
       infinite: true,
       centerMode: true,
       focusOnSelect: true,
@@ -159,7 +171,7 @@ $(document).ready(function() {
       slidesToScroll: 5,
       // autoplay: true,
       autoplaySpeed: 2000,
-      // easing: "easeOutElastic",
+      easing: "easeOutElastic",
       // swipeToSlide: false,
       responsive:
       [
