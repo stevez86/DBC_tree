@@ -18,28 +18,37 @@ $(document).ready(function() {
 
   $("#your-cohort-link").on("click", function () {
     if ($(this).hasClass("filter-enabled")) {
+      $(this).removeClass("filter-enabled");
       resetInterface();
-      scrollToUser(currentUser.id);
+      setTimeout(function() {
+        scrollToUser(currentUser.id);
+      }, 300);
     } else {
+      $(".filter-enabled").removeClass("filter-enabled");
+      $(this).addClass("filter-enabled");
       showUserCohort(currentUser.id);
     }
-    //TODO
-    $(this).toggleClass("filter-enabled");
   });
 
   $("#your-family-link").on("click", function () {
     if ($(this).hasClass("filter-enabled")) {
+      $(this).removeClass("filter-enabled");
       resetInterface();
-      scrollToUser(currentUser.id);
+      setTimeout(function() {
+        scrollToUser(currentUser.id);
+      }, 300);
     } else {
+      $(".filter-enabled").removeClass("filter-enabled");
+      $(this).addClass("filter-enabled");
       showUserFamily(currentUser.id);
     }
-    //TODO
-    $(this).toggleClass("filter-enabled");
   });
 
   $('.user').click(function(){
-    highlightUser($(this).data("id"));
+    userID = $(this).data("id")
+    highlightUser(userID);
+    $(".selected_user").removeClass('selected_user');
+    $("[data-id="+userID+"]").addClass('selected_user');
   });
 
   $('.user').hover(function(){
@@ -49,23 +58,25 @@ $(document).ready(function() {
   });
 
   $(".cohort-title").on("click", function () {
+    $(".filter-enabled").removeClass("filter-enabled");
     reSlick();
-    $(this).parent().children(".cohort").toggle(200);
+    $(".user:hidden").css("display","inline-block");
+    $(this).parent().children(".cohort").toggle(150);
   });
 
-  //TODO
   function showUserFamily(userID) {
+    highlightUserFamily(userID);
+    $(".cohort").hide(400);
     var lineageID = getLineage(userID);
-    //hide irrelevent cohorts
-    $(".cohort:not(:has([data-lineageID="+lineageID+"]))").hide();
-    //unslick relevent
-    $(".cohort:has([data-lineageID="+lineageID+"])").unslick();
-    //hide irrelevent users
-    $(".user:not(:has([data-lineageID="+lineageID+"]))").hide();
-    //CENTER REMAINING?
+    // $(".cohort:visible").hide();
+    $(".user:not([data-lineage="+lineageID+"])").hide();
+    $(".cohort:has([data-lineage="+lineageID+"])").unslick();
+    $(".cohort:has([data-lineage="+lineageID+"])").show(400);
+    setTimeout(function() {
+      scrollToUser(userID);
+    }, 300);
   }
 
-  //TODO
   function getLineage(userID) {
     return $("[data-id="+userID+"]").data("lineage");
   }
@@ -73,16 +84,13 @@ $(document).ready(function() {
   function showUserCohort(userID) {
     var cohort = getCohort(userID);
     cohort.unslick();
-    $(".cohort:not(:has([data-id="+userID+"]))").hide();
-    cohort.show();
+    $(".cohort").hide(400);
+    cohort.children(".user").css("display","inline-block");
+    cohort.show(400);
 
     setTimeout(function() {
-      scrollToCohort(userID);
-    }, 500);
-    setTimeout(function() {
-      $(".cohort:has([data-id="+userID +"])").parent().effect("highlight",{color: "white"});
-      $(".cohort:has([data-id="+userID +"])").parent().children(".cohort-title").effect("highlight",{color: "yellow"});
-    }, 900);
+      scrollToUser(userID);
+    }, 300);
   }
 
   function highlightUserFamily(userID) {
@@ -92,9 +100,6 @@ $(document).ready(function() {
   }
 
   function highlightUser(userID) {
-    //TODO
-    //highlight user border a certain color
-    //highlight those in family with different color
     highlightUserFamily(userID);
     setSidebar(userID);
   }
@@ -136,11 +141,11 @@ $(document).ready(function() {
   }
 
   function getUserIndex(userID) {
-    return $("[data-id=401].user:not(.slick-cloned)").attr("index");
+    return $("[data-id="+userID+"].user:not(.slick-cloned)").attr("index");
   }
 
   function scrollToCohort(userID) {
-    $.scrollTo(".cohort:has([data-id="+ userID +"])", {duration: 700, offset:-69, easing:'easeInOutExpo'});
+    $.scrollTo(".cohort:has([data-id="+ userID +"])", {duration: 600, offset:-69, easing:'easeInOutExpo'});
   }
 
   function getCohort(userID) {
@@ -149,8 +154,9 @@ $(document).ready(function() {
 
   function resetInterface() {
     removeTempClasses();
+    $(".user:hidden").css("display","inline-block")
+    $(".cohort:hidden").show(400);
     reSlick();
-    $(".cohort:hidden").show();
   }
 
   function removeTempClasses() {
