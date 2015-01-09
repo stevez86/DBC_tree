@@ -37,11 +37,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def email=(new_email)
-    self.email = new_email
-    set_profile_url
-  end
-
   # def lineage_id=(new_lineage_id)
   #   self.lineage_id = new_lineage_id
   #   save!

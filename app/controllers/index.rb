@@ -21,23 +21,28 @@ get '/users/:id' do
 
   user = User.find(params[:id])
 
-  user_xfer = {
-    mentor_id: user.mentor_id,
-    mentor_name: user.mentor.name,
-    cohort: user.cohort.name,
-    hometown: user.hometown
-  }
-  # user_xfer[:mentor_id] = user.mentor_id
-  # user_xfer[:mentor_name] = user.mentor.name
-  # user_xfer[:cohort] = user.cohort.name
+  user_xfer = {}
+  #   mentor_id: user.mentor_id,
+  #   mentor_name: user.mentor.name,
+  #   cohort: user.cohort.name
+  #   homet
+  # }
+
+  if user.mentor
+    user_xfer[:mentor_id] = user.mentor_id
+    user_xfer[:mentor_name] = user.mentor.name
+  end
+
+  user_xfer[:cohort] = user.cohort.name
+  user_xfer[:hometown] = user.hometown
 
   if user.liprofile
     user_xfer[:location] = user.liprofile.location
     user_xfer[:headline] = user.liprofile.headline
   end
 
-  # puts "XFER"
-  # ap user_xfer
+  puts "XFER"
+  ap user_xfer
 
   content_type :json
   user_xfer.to_json

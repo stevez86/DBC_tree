@@ -79,14 +79,8 @@ $(document).ready(function() {
 
 });
 
-function resetInterfaceWithoutDisturb
-  reSlick();
-  $(".user:hidden").css("display","inline-block");
 
 function showUserFamily(userID) {
-
-
-
   highlightUserFamily(userID);
   $(".cohort").hide();
   var lineageID = getLineage(userID);
