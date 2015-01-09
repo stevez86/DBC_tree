@@ -28,14 +28,14 @@
   <ul class="nav_links">
     <li>LOGO</li>
   </ul>
-  <% if authorized? %>
-    <ul class="nav_user">
-      <li id="your-link"><%= current_user_name %></li>
-      <li id="your-cohort-link"><%= @current_user_cohort.name %></li>
+  <ul class="nav_user">
+    <% if @current_user %>
+      <li id="your-link"><%= @current_user.name %></li>
+      <li id="your-cohort-link"><%= @current_user.cohort.name %></li>
       <li id="your-family-link">Your DBC Family Tree</li>
-      <li>Sign Out</li>
-    </ul>
-  <% end %>
+    <% end %>
+    <li><a href="/logout">Sign Out</a></li>
+  </ul>
 </nav>
 </header>
 <aside><div class="sidebar">
@@ -43,9 +43,12 @@
     <img id="highlight_image" src="" />
     <ul>
       <li id="highlight_name"></li>
-      <!-- <li id="highlight_email"></li> -->
-      <!-- <li id="highlight_city"></li> -->
+      <li id="highlight_cohort"></li>
+      <li></li>
       <li id="highlight_mentor"></li>
+      <li></li>
+      <li id="highlight_headline"></li>
+      <li id="highlight_location"></li>
     </ul>
   </div>
 </div></aside>

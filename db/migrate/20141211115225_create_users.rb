@@ -4,19 +4,15 @@ class CreateUsers < ActiveRecord::Migration
 
       t.string :name
       t.string :email
-      t.string :profile_image
+      t.string :profile_url
       t.string :password_hash
 
       t.integer :lineage_id
-      t.integer :mentor_id
-      t.integer :cohort_id
-      t.integer :liprofile_id
+      t.belongs_to :mentor, index: true
+      t.belongs_to :cohort, index: true
 
       t.timestamps
     end
-
-    add_index :users, :mentor_id
-    add_index :users, :cohort_id
   end
 end
 

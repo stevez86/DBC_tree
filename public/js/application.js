@@ -5,7 +5,7 @@ $(document).ready(function() {
 
   $.ajax({
     type: 'get',
-    url: "current_user",
+    url: "users/current_user",
     datatype: "json"
   }).success( function(current_user) {
     currentUser.id = current_user.id;
@@ -107,28 +107,43 @@ $(document).ready(function() {
     var new_name = $("[data-id="+userID+"] .name")[0].innerHTML;
     var new_image = $("[data-id="+userID+"] img").attr("src");
 
-    $(".sidebar").show(600);
+    $(".sidebar:hidden").show(200);
 
-    $("#highlight_image").fadeOut(300, function() {
-      $("#highlight_image").attr("src",new_image);
-      $("#highlight_image").fadeIn(300);
+    $("#highlight_image").fadeOut(100, function() {
+      $(this).attr("src",new_image);
+      $(this).fadeIn(100);
     });
 
-    $("#highlight_name").hide(200, function() {
-      $(this)[0].innerHTML = new_name;
-      $(this).show(300);
+    $("#highlight_name").hide(100, function() {
+      $(this).html("<a id="+userID+">"+new_name+"</a>");
+      $(this).show(250);
     });
 
-    $("#highlight_mentor").hide(100);
+    $("#highlight_mentor").hide(200);
+    $("#highlight_cohort").hide(200);
+    $("#highlight_headline").hide(200);
+    $("#highlight_location").hide(200);
 
     $.ajax({
       type: 'get',
-      url: "users/"+ userID +"/mentor",
+      url: "users/"+ userID,
       datatype: "json"
-    }).success( function(mentor) {
-      if (mentor !== null) {
-        $("#highlight_mentor").text("Mentor: " + mentor.name);
-        $("#highlight_mentor").show(100);
+    }).success( function(user) {
+      if (user !== null) {
+        console.log(user);
+        $("#highlight_cohort").html("<a id="+userID+">"+user.cohort+"</a>");
+        $("#highlight_cohort").show(200);
+
+        $("#highlight_mentor").html("Mentor: <a id="+user.mentor_id+">"+user.mentor_name+"</a>");
+        $("#highlight_mentor").show(250);
+
+        if (user.headline) {
+          $("#highlight_headline").html(user.headline);
+          $("#highlight_headline").show(300);
+
+          $("#highlight_location").html(user.location);
+          $("#highlight_location").show(350);
+        }
       }
     });
   }
@@ -172,7 +187,7 @@ $(document).ready(function() {
       dots: false,
       adaptiveHeight: true,
       draggable: false,
-      speed: 800,
+      speed: 400,
       infinite: true,
       centerMode: true,
       focusOnSelect: true,

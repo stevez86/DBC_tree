@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :mentees, class_name: "User", foreign_key: "mentor_id"
   belongs_to :mentor, class_name: "User", inverse_of: :mentees
 
+  has_one :liprofile
+
   # validates :email, uniqueness: true
   # validates :password, :email, presence: true
 
@@ -35,9 +37,9 @@ class User < ActiveRecord::Base
 
   # def lineage_id=(new_lineage_id)
   #   self.lineage_id = new_lineage_id
-  #   self.save!
+  #   save!
   #   self.mentees.each do |mentee|
-  #     mentee.lineage_id = new_lineage_id
+  #     mentee.lineage_id = new_lineage_id if mentee.lineage_id != new_lineage_id
   #     mentee.save!
   #   end
   # end
@@ -57,23 +59,16 @@ class User < ActiveRecord::Base
 
     all_mentees.each do |mentee|
       mentee.lineage_id = self.lineage_id
-      mentee.save!
+      mentee.save
     end
   end
 
-  # def profile_image
-  #   return self.profile_image if self.profile_image != null
+  def primary_profile_url
+    # return this.liprofile.profile_url if this.liprofile.profile_url
+    return self.profile_url if self.profile_url
 
-  #   hash = Digest::MD5.hexdigest(self.email)
-  #   default = "&d=" + URI::encode('http://static.sepakbola.com/images/pemain/143823.jpg')
-  #   "http://www.gravatar.com/avatar/" + hash + "?s=180" + default
-  # end
-
-  def graduation_date
-    # TODO
-  end
-
-  def last_cohort
-    # TODO
+    hash = Digest::MD5.hexdigest(self.email)
+    default = "&d=" + URI::encode('http://static.sepakbola.com/images/pemain/143823.jpg')
+    return "http://www.gravatar.com/avatar/" + hash + "?s=200" + default
   end
 end

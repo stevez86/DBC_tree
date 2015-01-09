@@ -1,6 +1,6 @@
 class CreateLiprofiles < ActiveRecord::Migration
   def change
-    create_table :users do |t|
+    create_table :liprofiles do |t|
 
       t.string :name
       t.string :email
@@ -9,7 +9,7 @@ class CreateLiprofiles < ActiveRecord::Migration
       t.string :location
       t.string :headline
 
-      t.integer :user_id
+      t.belongs_to :user, index: true
 
       t.timestamps
     end

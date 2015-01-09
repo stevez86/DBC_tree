@@ -9,7 +9,7 @@ students = []
 400.times do
   sex = ["men","women"].shuffle.first
   profile_img = "https://randomuser.me/api/portraits/" + sex.to_s + "/" + rand(96).to_s + ".jpg"
-  students << User.new(name: Faker::Name.name, email: Faker::Internet.email, city: Faker::Address.city, profile_image: profile_img.to_s)
+  students << User.new(name: Faker::Name.name, email: Faker::Internet.email, profile_url: profile_img.to_s)
 end
 
 graduation_date = Date.new(2015,1,9)
@@ -72,18 +72,17 @@ def gravatar_image(email,size = 180)
 end
 
 raccoons_students.each do |raccoon_param|
-  students << User.create(name: raccoon_param[:name], email: raccoon_param[:email], cohort: raccoon_cohort, profile_image: gravatar_image(raccoon_param[:email]))
+  students << User.create(name: raccoon_param[:name], email: raccoon_param[:email], cohort: raccoon_cohort, profile_url: gravatar_image(raccoon_param[:email]))
 end
 
-students = User.all
-cohorts = Cohort.all
+cohorts = Cohort.all.sort_by {|cohort| cohort.graduation_date}.reverse
 # puts "TESTTESTETTSGDJSHGKJFKJSHFKSHFKSJDFHHJ!!!!!!!!!!!!!!"
 
-cohorts.sort_by {|cohort| cohort.graduation_date}.reverse.each_with_index do |cohort, i|
+cohorts.each_with_index do |cohort, i|
   if i < cohorts.length - 1
     cohort.users.each do |student|
-      student.mentor = cohorts[i+1].users.sample
-      student.save!
+      student.mentees << cohorts[i+1].users.sample
+      student.save
     end
   end
 end
