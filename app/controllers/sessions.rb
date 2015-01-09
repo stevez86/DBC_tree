@@ -1,13 +1,30 @@
 get '/login' do
-  redirect '/' if authorized?
+  p params[:state]
+  p params[:code]
+
+  if params[:state] == "DCEEFWF45453sdffef424"
+
+    code = params[:code]
+    client_id = ENV['API_KEY']
+    secret_key = ENV['SECRET_KEY']
+    redirect_url = "http://localhost:9393/login-redirect-auth"
+
+    url = "https://www.linkedin.com/uas/oauth2/accessToken?grant_type=authorization_code&code=#{code}&redirect_uri=#{redirect_url}&client_id=#{client_id}&client_secret=#{secret_key}"
+
+    response = HTTParty.post(url).parsed_response
+    p response
+
+    redirect '/'
+  end
+
 
   erb :login
 end
 
 get '/login-redirect' do
 
-  client_id = ENV['LINKEDIN_KEY']
-  scope = "r_fullprofile%20r_emailaddress"
+  client_id = ENV['API_KEY']
+  scope = "r_fullprofile%20r_emailaddress%20r_basicprofile%20r_contactinfo"
   state = "DCEEFWF45453sdffef424"
   redirect_url = "http://localhost:9393/login-redirect-auth"
 
@@ -16,7 +33,7 @@ get '/login-redirect' do
 end
 
 get '/login-redirect-auth' do
-  params
+  params["code"]
 end
 
 get '/logout' do
