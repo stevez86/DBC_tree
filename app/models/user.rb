@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   # validates :email, uniqueness: true
   # validates :password, :email, presence: true
 
-  after_initialize :defaults, :set_profile_url
+  after_create :defaults,
 
   def defaults
     self.lineage_id ||= self.id

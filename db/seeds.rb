@@ -1,6 +1,5 @@
 require 'faker'
 require 'open-uri'
-# require 'dbc-ruby'
 require 'date'
 
 def get_sample_cohorts
@@ -18,7 +17,7 @@ get_sample_cohorts.each do |cohort|
   cohort.students.each do |student|
     new_user = User.create(name: student.name, email: student.email, hometown:student.profile[:hometown])
     new_cohort.users << new_user
-    #puts student.name.to_s + student.email.to_s + student.profile[:hometown].to_s + student.profile[:current_location].to_s + student.profile[:about].to_s
+
   end
 end
 
@@ -42,6 +41,7 @@ to_delete.each do |name|
   cohort.destroy
 end
 
+# Set Mentors
 cohorts.reverse.each_with_index do |cohort, i|
   if i < cohorts.length - 2
     student_sample = cohorts[i+1].users.shuffle

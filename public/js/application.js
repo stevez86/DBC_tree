@@ -10,22 +10,26 @@ $(document).ready(function() {
   }).success( function(current_user) {
     currentUser.id = current_user.id;
     currentUser.lineage_id = current_user.lineage_id;
+    scrollToUser(currentUser.id);
   });
 
   $("#your-link").on("click", function () {
+    resetInterface();
     scrollToUser(currentUser.id);
   });
 
   $("#highlight_mentor").on("click", function() {
+    resetInterface();
     scrollToUser($(this).children("a").attr("id"));
   });
 
   $("#highlight_cohort").on("click", function() {
-    // scrollToUser($(this).children("a").attr("id"));
+    resetInterface();
     showUserCohort($(this).children("a").attr("id"));
   });
 
   $("#highlight_name").on("click", function() {
+    resetInterface();
     scrollToUser($(this).children("a").attr("id"));
   });
 
@@ -58,8 +62,8 @@ $(document).ready(function() {
   });
 
   $('.user').click(function(){
-    userID = $(this).data("id")
-    highlightUser(userID);
+    userID = $(this).data("id");
+    selectUser(userID);
     $(".selected_user").removeClass('selected_user');
     $("[data-id="+userID+"]").addClass('selected_user');
   });
@@ -72,13 +76,25 @@ $(document).ready(function() {
 
   $(".cohort-title").on("click", function () {
     $(".filter-enabled").removeClass("filter-enabled");
+    $(this).parent().find(".user").css("display","inline-block");
+    $(".user").css("display","inline-block");
+    // console.log(test);
     reSlick();
-    $(".user:hidden").css("display","inline-block");
     $(this).parent().children(".cohort").toggle(150);
   });
 
 });
 
+function scrollToCohort(userID) {
+  $.scrollTo(".cohort:has([data-id="+ userID +"])", {duration: 600, offset:-72, easing:'easeInOutExpo'});
+  selectUser(userID);
+}
+
+function scrollToUser(userID) {
+  scrollToCohort(userID);
+  getCohort(userID).slickGoTo(getUserIndex(userID));
+  selectUser(userID);
+}
 
 function showUserFamily(userID) {
   highlightUserFamily(userID);
@@ -90,10 +106,6 @@ function showUserFamily(userID) {
   setTimeout(function() {
     scrollToUser(userID);
   }, 300);
-}
-
-function getLineage(userID) {
-  return $("[data-id="+userID+"]").data("lineage");
 }
 
 function showUserCohort(userID) {
@@ -108,13 +120,8 @@ function showUserCohort(userID) {
   }, 400);
 }
 
-function highlightUserFamily(userID) {
-  var lineage = $("[data-id="+userID+"]").data("lineage");
-  $('.current_family_user').removeClass('current_family_user');
-  $("[data-lineage="+lineage+"]").addClass('current_family_user');
-}
-
-function highlightUser(userID) {
+//sets sidebar and highlights family
+function selectUser(userID) {
   highlightUserFamily(userID);
   setSidebar(userID);
 }
@@ -168,33 +175,30 @@ function setSidebar(userID) {
   });
 }
 
-function scrollToUser(userID) {
-  scrollToCohort(userID);
-  getCohort(userID).slickGoTo(getUserIndex(userID));
-  highlightUser(userID);
-  setTimeout(function() {
-    $("[data-id="+userID+"] img").effect("highlight",{color: "red"})
-  }, 300);
+function highlightUserFamily(userID) {
+  $('.current_family_user').removeClass('current_family_user');
+  $("[data-lineage="+getLineage(userID)+"]").addClass('current_family_user');
 }
 
 function getUserIndex(userID) {
   return $("[data-id="+userID+"].user:not(.slick-cloned)").attr("index");
 }
 
-function scrollToCohort(userID) {
-  $.scrollTo(".cohort:has([data-id="+ userID +"])", {duration: 600, offset:-72, easing:'easeInOutExpo'});
+function getLineage(userID) {
+  return $("[data-id="+userID+"]").data("lineage");
 }
 
 function getCohort(userID) {
   return $(".cohort:has([data-id="+userID +"])");
 }
 
+//resets interface to zero and scrolls to current user
 function resetInterface() {
   removeTempClasses();
-  $(".user:hidden").css("display","inline-block")
+  $(".user:hidden").css("display","inline-block");
   $(".cohort:hidden").show(400);
   reSlick();
-  scrollToUser(currentUser.id);
+  // scrollToUser(currentUser.id);
 }
 
 function removeTempClasses() {
@@ -213,8 +217,8 @@ function reSlick() {
     focusOnSelect: true,
     slidesToShow: 16,
     slidesToScroll: 5,
-    // autoplay: true,
-    autoplaySpeed: 2000,
+    autoplay: true,
+    autoplaySpeed: 3000,
     easing: "easeOutElastic",
     // swipeToSlide: false,
     responsive:
