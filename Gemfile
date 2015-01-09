@@ -24,7 +24,7 @@ gem 'sinatra-redirect-with-flash'
 gem 'dotenv'
 
 gem 'httparty'
-
+gem 'awesome_print'
 gem 'hirb'
 
 group :test do

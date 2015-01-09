@@ -24,6 +24,7 @@ require 'erb'
 require 'faker'
 
 require 'httparty'
+require 'awesome_print'
 
 require 'dotenv'
 Dotenv.load

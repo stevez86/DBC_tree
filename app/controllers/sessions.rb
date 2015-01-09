@@ -1,20 +1,37 @@
 get '/login' do
-  p params[:state]
-  p params[:code]
 
   if params[:state] == "DCEEFWF45453sdffef424"
 
     code = params[:code]
     client_id = ENV['API_KEY']
     secret_key = ENV['SECRET_KEY']
-    redirect_url = "http://localhost:9393/login-redirect-auth"
+    redirect_url = "http://localhost:9393/login"
 
     url = "https://www.linkedin.com/uas/oauth2/accessToken?grant_type=authorization_code&code=#{code}&redirect_uri=#{redirect_url}&client_id=#{client_id}&client_secret=#{secret_key}"
 
-    response = HTTParty.post(url).parsed_response
-    p response
+    li_user_token = HTTParty.post(url).parsed_response["access_token"]
 
-    redirect '/'
+    requested_fields = "formatted-name,location,headline,email-address,picture-url"
+    header = {headers: { "Authorization" => "Bearer #{user_token}"}}
+    url = "https://api.linkedin.com/v1/people/~:(#{requested_fields})"
+    response = HTTParty.get(url, header).parsed_response["person"]
+
+    li_email = response["email_address"]
+
+    new_li_user = LinkedIN.find_or_create_by(email: li_email)
+    new_li_user.name = response["formatted-name"]
+    new_li_user.location = response["location"]["name"]
+    new_li_user.headline = response["headline"]
+    new_li_user.picture_url = response["picture_url"]
+    new_li_user.token = li_user_token
+    new_li_user.user = User.find_by(email: li_email)
+    new_li_user.save!
+    ap "TEST"
+    ap new_li_user
+
+    # ap response
+
+    redirect '/success'
   end
 
 
@@ -26,7 +43,7 @@ get '/login-redirect' do
   client_id = ENV['API_KEY']
   scope = "r_fullprofile%20r_emailaddress%20r_basicprofile%20r_contactinfo"
   state = "DCEEFWF45453sdffef424"
-  redirect_url = "http://localhost:9393/login-redirect-auth"
+  redirect_url = "http://localhost:9393/login"
 
   redirect "https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=#{client_id}&scope=#{scope}&state=#{state}&redirect_uri=#{redirect_url}"
 

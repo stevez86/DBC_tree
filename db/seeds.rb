@@ -34,7 +34,7 @@ raccoon_cohort = Cohort.create(name: "The Racoons", graduation_date: Date.new(20
 cohorts << raccoon_cohort
 
 raccoons_students = [
-{ name: "Steve Zimmerman", email: "szman86@gmail.com" },
+{ name: "Steve Zimmerman", email: "szimmerman@alumni.purdue.edu" },
 { name: "Stephen Clem", email: "stevebclem@gmail.com" },
 { name: "Anna Wu", email: "shinshinwu@gmail.com" },
 { name: "Valerie Smith", email: "valeriesmithdbc@gmail.com" },
