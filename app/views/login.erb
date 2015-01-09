@@ -1,6 +1,7 @@
+
 <div class="login-signup">
   <div class="signup">
-    <h2><%= @signup? 'Signup:' : 'Login:' %></h2>
+    <h2>Login with LinkedIN</h2>
     <form action="/<%= @signup? 'signup' : 'login' %>" method="post">
       <% if @signup  %>
         <div class="form_spacer"><label>Email:</label></div>

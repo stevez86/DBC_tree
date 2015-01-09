@@ -21,6 +21,10 @@ gem 'rack-flash3'
 gem 'sinatra-redirect-with-flash'
 # gem 'active_support/inflector'
 
+gem 'dotenv'
+
+gem 'httparty'
+
 gem 'hirb'
 
 group :test do

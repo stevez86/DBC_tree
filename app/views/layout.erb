@@ -21,8 +21,6 @@
   <script src="/js/application.js"></script>
   <script type="text/javascript" src="/slick/slick.min.js"></script>
 
-
-
   <title>DBC Tree</title>
 </head>
 <body>
@@ -30,13 +28,14 @@
   <ul class="nav_links">
     <li>LOGO</li>
   </ul>
-  <ul class="nav_user">
-    <li id="your-link"><%= current_user_name %></li>
-    <li id="your-cohort-link"><%= @current_user_cohort.name %></li>
-    <li id="your-family-link">Your DBC Family Tree</li>
-    <li>Sign Out</li>
-  </ul>
-  </ul>
+  <% if authorized? %>
+    <ul class="nav_user">
+      <li id="your-link"><%= current_user_name %></li>
+      <li id="your-cohort-link"><%= @current_user_cohort.name %></li>
+      <li id="your-family-link">Your DBC Family Tree</li>
+      <li>Sign Out</li>
+    </ul>
+  <% end %>
 </nav>
 </header>
 <aside><div class="sidebar">

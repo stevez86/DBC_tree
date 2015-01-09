@@ -66,9 +66,8 @@ $(document).ready(function() {
 
   function showUserFamily(userID) {
     highlightUserFamily(userID);
-    $(".cohort").hide(400);
+    $(".cohort").hide();
     var lineageID = getLineage(userID);
-    // $(".cohort:visible").hide();
     $(".user:not([data-lineage="+lineageID+"])").hide();
     $(".cohort:has([data-lineage="+lineageID+"])").unslick();
     $(".cohort:has([data-lineage="+lineageID+"])").show(400);
@@ -84,7 +83,7 @@ $(document).ready(function() {
   function showUserCohort(userID) {
     var cohort = getCohort(userID);
     cohort.unslick();
-    $(".cohort").hide(400);
+    $(".cohort").hide();
     cohort.children(".user").css("display","inline-block");
     cohort.show(400);
 

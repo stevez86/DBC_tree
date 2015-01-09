@@ -7,11 +7,11 @@ helpers  do
 
   def login(user)
     session[:user_id] = user.id
+    session[:user_name] = user.name
   end
 
   def logout
     session.clear
-    redirect_home
   end
 
   def current_user_id
@@ -19,14 +19,6 @@ helpers  do
   end
 
   def current_user_name
-    @current_user.name
-  end
-
-  def redirect_home
-    if authorized?
-      redirect "/user/#{session_user_id}"
-    else
-      redirect '/'
-    end
+    session[:user_name]
   end
 end

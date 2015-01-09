@@ -23,6 +23,11 @@ require 'rack-flash'
 require 'erb'
 require 'faker'
 
+require 'httparty'
+
+require 'dotenv'
+Dotenv.load
+
 require 'hirb'
 Hirb.enable
 
