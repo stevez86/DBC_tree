@@ -1,22 +1,7 @@
 
 <div class="login-signup">
-  <div class="signup">
-    <h2>Login with LinkedIN</h2>
-    <form action="/<%= @signup? 'signup' : 'login' %>" method="post">
-      <% if @signup  %>
-        <div class="form_spacer"><label>Email:</label></div>
-        <input class="input" type="text" name="email">
-        <br>
-      <% end %>
-      <div class="form_spacer"><label>Username:</label></div>
-      <input class="input" type="text" name="username">
-      <br>
-      <div class="form_spacer"><label>Password:</label></div>
-      <input class="input" type="password" name="password">
-      <br>
-      <div class="form_spacer"></div>
-      <input class="button" type="submit" value="<%= @signup? 'Create Account' : 'Login' %>">
-    </form>
-    <div class="login_error_message"><%= flash[:signup_notice] if flash[:signup_notice] %></div>
-  </div>
+  <form action="/login-redirect" method="get">
+    <input type="submit" value="Login with LinkedIn"
+         name="Submit"/>
+  </form>
 </div>

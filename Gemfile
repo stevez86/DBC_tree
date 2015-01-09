@@ -24,8 +24,12 @@ gem 'sinatra-redirect-with-flash'
 gem 'dotenv'
 
 gem 'httparty'
-
+gem 'awesome_print'
 gem 'hirb'
+
+# gem 'open-uri'
+gem 'dbc-ruby'
+# gem 'date'
 
 group :test do
   gem 'shoulda-matchers'
