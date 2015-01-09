@@ -1,49 +1,43 @@
-get '/signup' do
-  @signup = true;
-  erb :tree
+get '/login' do
+  redirect '/' if authorized?
+
+  erb :login
 end
 
+get '/login-redirect' do
 
-post '/login' do
-  begin
-    @user = User.find_by_username(params[:username])
+  client_id = ENV['LINKEDIN_KEY']
+  scope = "r_fullprofile%20r_emailaddress"
+  state = "DCEEFWF45453sdffef424"
+  redirect_url = "http://localhost:9393/login-redirect-auth"
 
-    if @user.password != params[:password]
-      flash[:login_notice] = "Incorrect password"
-      redirect_home
-    end
+  redirect "https://www.linkedin.com/uas/oauth2/authorization?response_type=code&client_id=#{client_id}&scope=#{scope}&state=#{state}&redirect_uri=#{redirect_url}"
 
-  rescue => error
-  end
-
-  if error
-    if error.is_a? NoMethodError
-      flash[:login_notice] = "Invalid username"
-    else
-      flash[:login_notice] = "Login Error: #{error}"
-    end
-    redirect_home
-  else
-    login(@user)
-    redirect_home
-  end
 end
 
-
-post '/signup' do
-
-  begin
-    new_user = User.new(username: params[:username], email: params[:email])
-    new_user.password = params[:password]
-    new_user.save!
-  rescue => error
-  end
-
-  if error
-    flash[:signup_notice] = "#{error.to_s.sub('Validation failed: ','').sub(',',' and')}"
-    redirect_home
-  else
-    login(new_user)
-    redirect_home
-  end
+get '/login-redirect-auth' do
+  params
 end
+
+get '/logout' do
+  logout
+  redirect '/login'
+end
+
+# post '/signup' do
+
+#   begin
+#     new_user = User.new(username: params[:username], email: params[:email])
+#     new_user.password = params[:password]
+#     new_user.save!
+#   rescue => error
+#   end
+
+#   if error
+#     flash[:signup_notice] = "#{error.to_s.sub('Validation failed: ','').sub(',',' and')}"
+#     redirect_home
+#   else
+#     login(new_user)
+#     redirect_home
+#   end
+# end

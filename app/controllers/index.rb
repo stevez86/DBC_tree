@@ -1,4 +1,8 @@
 get '/' do
+  if !authorized?
+    redirect '/login'
+  end
+
   @current_user = User.find_by(email: "szman86@gmail.com")
   login(@current_user)
   @current_user_cohort = @current_user.cohort
