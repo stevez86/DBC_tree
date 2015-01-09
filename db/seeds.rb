@@ -1,7 +1,60 @@
 require 'faker'
-# require 'active_support/inflector'
-require 'date'
 require 'open-uri'
+# require 'dbc-ruby'
+require 'date'
+
+def get_sample_cohorts
+  DBC::Cohort.all.select{|cohort| cohort.location == 'San Francisco' && is_sample_cohort(cohort) }.sort_by{|cohort| Date.parse(cohort.start_date)}
+end
+
+def is_sample_cohort(cohort)
+  Date.parse(cohort.start_date) > Date.parse("2013-10-01") &&
+    Date.parse(cohort.start_date) < Date.parse("2015-1-31")
+end
+
+get_sample_cohorts.each do |cohort|
+  new_cohort = Cohort.create(name: cohort.name, location: cohort.location, start_date: cohort.start_date)
+
+  cohort.students.each do |student|
+    new_user = User.create(name: student.name, email: student.email, hometown:student.profile[:hometown])
+    new_cohort.users << new_user
+    #puts student.name.to_s + student.email.to_s + student.profile[:hometown].to_s + student.profile[:current_location].to_s + student.profile[:about].to_s
+  end
+end
+
+me = User.find_by(email: "szman86@gmail.com")
+me.email = "szimmerman@alumni.purdue.edu"
+me.save
+
+cohorts = Cohort.all.sort_by {|cohort| cohort.start_date}
+
+to_delete = ["2013 Melt",
+"2014 Melt - SF",
+"SF - On Hold",
+"Staff Phase 0",
+"Test cohort"]
+
+to_delete.each do |name|
+  cohort = Cohort.find_by(name: name)
+  cohort.users.each do |user|
+    user.destroy
+  end
+  cohort.destroy
+end
+
+cohorts.reverse.each_with_index do |cohort, i|
+  if i < cohorts.length - 2
+    student_sample = cohorts[i+1].users.shuffle
+    student_sample.concat( cohorts[i+2].users.shuffle )
+
+    cohort.users.each do |student|
+      student.mentor = student_sample.pop
+      student.save
+    end
+  end
+end
+
+__END__
 
 cohorts = []
 students = []

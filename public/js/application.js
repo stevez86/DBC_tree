@@ -16,6 +16,19 @@ $(document).ready(function() {
     scrollToUser(currentUser.id);
   });
 
+  $("#highlight_mentor").on("click", function() {
+    scrollToUser($(this).children("a").attr("id"));
+  });
+
+  $("#highlight_cohort").on("click", function() {
+    // scrollToUser($(this).children("a").attr("id"));
+    showUserCohort($(this).children("a").attr("id"));
+  });
+
+  $("#highlight_name").on("click", function() {
+    scrollToUser($(this).children("a").attr("id"));
+  });
+
   $("#your-cohort-link").on("click", function () {
     if ($(this).hasClass("filter-enabled")) {
       $(this).removeClass("filter-enabled");
@@ -64,232 +77,244 @@ $(document).ready(function() {
     $(this).parent().children(".cohort").toggle(150);
   });
 
-  function showUserFamily(userID) {
-    highlightUserFamily(userID);
-    $(".cohort").hide();
-    var lineageID = getLineage(userID);
-    $(".user:not([data-lineage="+lineageID+"])").hide();
-    $(".cohort:has([data-lineage="+lineageID+"])").unslick();
-    $(".cohort:has([data-lineage="+lineageID+"])").show(400);
-    setTimeout(function() {
-      scrollToUser(userID);
-    }, 300);
-  }
+});
 
-  function getLineage(userID) {
-    return $("[data-id="+userID+"]").data("lineage");
-  }
+function resetInterfaceWithoutDisturb
+  reSlick();
+  $(".user:hidden").css("display","inline-block");
 
-  function showUserCohort(userID) {
-    var cohort = getCohort(userID);
-    cohort.unslick();
-    $(".cohort").hide();
-    cohort.children(".user").css("display","inline-block");
-    cohort.show(400);
+function showUserFamily(userID) {
 
-    setTimeout(function() {
-      scrollToCohort(userID);
-    }, 400);
-  }
 
-  function highlightUserFamily(userID) {
-    var lineage = $("[data-id="+userID+"]").data("lineage");
-    $('.current_family_user').removeClass('current_family_user');
-    $("[data-lineage="+lineage+"]").addClass('current_family_user');
-  }
 
-  function highlightUser(userID) {
-    highlightUserFamily(userID);
-    setSidebar(userID);
-  }
+  highlightUserFamily(userID);
+  $(".cohort").hide();
+  var lineageID = getLineage(userID);
+  $(".user:not([data-lineage="+lineageID+"])").hide();
+  $(".cohort:has([data-lineage="+lineageID+"])").unslick();
+  $(".cohort:has([data-lineage="+lineageID+"])").show(400);
+  setTimeout(function() {
+    scrollToUser(userID);
+  }, 300);
+}
 
-  function setSidebar(userID) {
-    var new_name = $("[data-id="+userID+"] .name")[0].innerHTML;
-    var new_image = $("[data-id="+userID+"] img").attr("src");
+function getLineage(userID) {
+  return $("[data-id="+userID+"]").data("lineage");
+}
 
-    $(".sidebar:hidden").show(200);
+function showUserCohort(userID) {
+  var cohort = getCohort(userID);
+  cohort.unslick();
+  $(".cohort").hide();
+  cohort.children(".user").css("display","inline-block");
+  cohort.show(400);
 
-    $("#highlight_image").fadeOut(100, function() {
-      $(this).attr("src",new_image);
-      $(this).fadeIn(100);
-    });
+  setTimeout(function() {
+    scrollToCohort(userID);
+  }, 400);
+}
 
-    $("#highlight_name").hide(100, function() {
-      $(this).html("<a id="+userID+">"+new_name+"</a>");
-      $(this).show(250);
-    });
+function highlightUserFamily(userID) {
+  var lineage = $("[data-id="+userID+"]").data("lineage");
+  $('.current_family_user').removeClass('current_family_user');
+  $("[data-lineage="+lineage+"]").addClass('current_family_user');
+}
 
-    $("#highlight_mentor").hide(200);
-    $("#highlight_cohort").hide(200);
-    $("#highlight_headline").hide(200);
-    $("#highlight_location").hide(200);
+function highlightUser(userID) {
+  highlightUserFamily(userID);
+  setSidebar(userID);
+}
 
-    $.ajax({
-      type: 'get',
-      url: "users/"+ userID,
-      datatype: "json"
-    }).success( function(user) {
-      if (user !== null) {
-        console.log(user);
-        $("#highlight_cohort").html("<a id="+userID+">"+user.cohort+"</a>");
-        $("#highlight_cohort").show(200);
+function setSidebar(userID) {
+  var new_name = $("[data-id="+userID+"] .name")[0].innerHTML;
+  var new_image = $("[data-id="+userID+"] img").attr("src");
 
-        $("#highlight_mentor").html("Mentor: <a id="+user.mentor_id+">"+user.mentor_name+"</a>");
-        $("#highlight_mentor").show(250);
+  $(".sidebar:hidden").show(200);
 
-        if (user.headline) {
-          $("#highlight_headline").html(user.headline);
-          $("#highlight_headline").show(300);
+  $("#highlight_image").fadeOut(100, function() {
+    $(this).attr("src",new_image);
+    $(this).fadeIn(100);
+  });
 
-          $("#highlight_location").html(user.location);
-          $("#highlight_location").show(350);
+  $("#highlight_name").hide(100, function() {
+    $(this).html("<a id="+userID+">"+new_name+"</a>");
+    $(this).show(300);
+  });
+
+  $("#highlight_mentor").hide(200);
+  $("#highlight_cohort").hide(200);
+  $("#highlight_headline").hide(200);
+  $("#highlight_location").hide(200);
+  $("#highlight_hometown").hide(200);
+
+  $.ajax({
+    type: 'get',
+    url: "users/"+ userID,
+    datatype: "json"
+  }).success( function(user) {
+    if (user !== null) {
+      console.log(user);
+      $("#highlight_cohort").html("<a id="+userID+">"+user.cohort+"</a>");
+      $("#highlight_cohort").show(200);
+
+      $("#highlight_hometown").html(user.hometown);
+      $("#highlight_hometown").show(225);
+
+      $("#highlight_mentor").html("Mentor: <a id="+user.mentor_id+">"+user.mentor_name+"</a>");
+      $("#highlight_mentor").show(250);
+
+      if (user.headline) {
+        $("#highlight_headline").html(user.headline);
+        $("#highlight_headline").show(300);
+
+        $("#highlight_location").html(user.location);
+        $("#highlight_location").show(350);
+      }
+    }
+  });
+}
+
+function scrollToUser(userID) {
+  scrollToCohort(userID);
+  getCohort(userID).slickGoTo(getUserIndex(userID));
+  highlightUser(userID);
+  setTimeout(function() {
+    $("[data-id="+userID+"] img").effect("highlight",{color: "red"})
+  }, 300);
+}
+
+function getUserIndex(userID) {
+  return $("[data-id="+userID+"].user:not(.slick-cloned)").attr("index");
+}
+
+function scrollToCohort(userID) {
+  $.scrollTo(".cohort:has([data-id="+ userID +"])", {duration: 600, offset:-72, easing:'easeInOutExpo'});
+}
+
+function getCohort(userID) {
+  return $(".cohort:has([data-id="+userID +"])");
+}
+
+function resetInterface() {
+  removeTempClasses();
+  $(".user:hidden").css("display","inline-block")
+  $(".cohort:hidden").show(400);
+  reSlick();
+  scrollToUser(currentUser.id);
+}
+
+function removeTempClasses() {
+  $(".filter-enabled").removeClass("filter-enabled");
+}
+
+function reSlick() {
+  $(".cohort:not(.slick-initialized)").slick({
+    arrows: false,
+    dots: false,
+    adaptiveHeight: true,
+    draggable: false,
+    speed: 400,
+    infinite: true,
+    centerMode: true,
+    focusOnSelect: true,
+    slidesToShow: 16,
+    slidesToScroll: 5,
+    // autoplay: true,
+    autoplaySpeed: 2000,
+    easing: "easeOutElastic",
+    // swipeToSlide: false,
+    responsive:
+    [
+      {
+        breakpoint: 1800,
+        settings: {
+        slidesToShow: 16,
+        }
+      },
+      {
+        breakpoint: 1700,
+        settings: {
+        slidesToShow: 15,
+        }
+      },
+      {
+        breakpoint: 1600,
+        settings: {
+        slidesToShow: 14,
+        }
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+        slidesToShow: 13,
+        }
+      },
+      {
+        breakpoint: 1400,
+        settings: {
+        slidesToShow: 12,
+        }
+      },
+      {
+        breakpoint: 1300,
+        settings: {
+        slidesToShow: 11,
+        }
+      },
+      {
+        breakpoint: 1200,
+        settings: {
+        slidesToShow: 10,
+        }
+      },
+      {
+        breakpoint: 1100,
+        settings: {
+        slidesToShow: 9,
+        }
+      },
+      {
+        breakpoint: 1000,
+        settings: {
+        slidesToShow: 8,
+        }
+      },
+      {
+        breakpoint: 900,
+        settings: {
+        slidesToShow: 7,
+        }
+      },
+      {
+        breakpoint: 800,
+        settings: {
+        slidesToShow: 6,
+        }
+      },
+      {
+        breakpoint: 700,
+        settings: {
+        slidesToShow: 5,
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+        slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 500,
+        settings: {
+        slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 400,
+        settings: {
+        slidesToShow: 2,
         }
       }
-    });
-  }
-
-  function scrollToUser(userID) {
-    $(".cohort:has([data-id="+ userID +"])").show(200);
-    scrollToCohort(userID);
-    getCohort(userID).slickGoTo(getUserIndex(userID));
-    highlightUser(userID);
-    setTimeout(function() {
-      $("[data-id="+userID+"] img").effect("highlight",{color: "red"})
-    }, 300);
-  }
-
-  function getUserIndex(userID) {
-    return $("[data-id="+userID+"].user:not(.slick-cloned)").attr("index");
-  }
-
-  function scrollToCohort(userID) {
-    $.scrollTo(".cohort:has([data-id="+ userID +"])", {duration: 600, offset:-69, easing:'easeInOutExpo'});
-  }
-
-  function getCohort(userID) {
-    return $(".cohort:has([data-id="+userID +"])");
-  }
-
-  function resetInterface() {
-    removeTempClasses();
-    $(".user:hidden").css("display","inline-block")
-    $(".cohort:hidden").show(400);
-    reSlick();
-  }
-
-  function removeTempClasses() {
-    $(".filter-enabled").removeClass("filter-enabled");
-  }
-
-  function reSlick() {
-    $(".cohort:not(.slick-initialized)").slick({
-      arrows: false,
-      dots: false,
-      adaptiveHeight: true,
-      draggable: false,
-      speed: 400,
-      infinite: true,
-      centerMode: true,
-      focusOnSelect: true,
-      slidesToShow: 16,
-      slidesToScroll: 5,
-      // autoplay: true,
-      autoplaySpeed: 2000,
-      easing: "easeOutElastic",
-      // swipeToSlide: false,
-      responsive:
-      [
-        {
-          breakpoint: 1800,
-          settings: {
-          slidesToShow: 16,
-          }
-        },
-        {
-          breakpoint: 1700,
-          settings: {
-          slidesToShow: 15,
-          }
-        },
-        {
-          breakpoint: 1600,
-          settings: {
-          slidesToShow: 14,
-          }
-        },
-        {
-          breakpoint: 1500,
-          settings: {
-          slidesToShow: 13,
-          }
-        },
-        {
-          breakpoint: 1400,
-          settings: {
-          slidesToShow: 12,
-          }
-        },
-        {
-          breakpoint: 1300,
-          settings: {
-          slidesToShow: 11,
-          }
-        },
-        {
-          breakpoint: 1200,
-          settings: {
-          slidesToShow: 10,
-          }
-        },
-        {
-          breakpoint: 1100,
-          settings: {
-          slidesToShow: 9,
-          }
-        },
-        {
-          breakpoint: 1000,
-          settings: {
-          slidesToShow: 8,
-          }
-        },
-        {
-          breakpoint: 900,
-          settings: {
-          slidesToShow: 7,
-          }
-        },
-        {
-          breakpoint: 800,
-          settings: {
-          slidesToShow: 6,
-          }
-        },
-        {
-          breakpoint: 700,
-          settings: {
-          slidesToShow: 5,
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-          slidesToShow: 4,
-          }
-        },
-        {
-          breakpoint: 500,
-          settings: {
-          slidesToShow: 3,
-          }
-        },
-        {
-          breakpoint: 400,
-          settings: {
-          slidesToShow: 2,
-          }
-        }
-      ]
-    });
-  }
-});
+    ]
+  });
+}

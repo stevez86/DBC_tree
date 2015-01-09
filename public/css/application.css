@@ -82,7 +82,7 @@ nav {
   position: fixed;
   width: 20%;
   max-width: 240px;
-  top: 40px;
+  top: 0;
   left: 0;
   /*border-right: 1px dotted black;*/
   background: transparent;
@@ -217,9 +217,15 @@ nav {
 
 .user_highlight li {
   list-style-type: none;
+  font-size: 16px;
   margin: 0px 10px;
   padding: 2px 0px;
   color: white;
+}
+
+#highlight_name {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 #highlight_headline, #highlight_location {

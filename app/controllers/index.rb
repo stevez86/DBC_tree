@@ -5,7 +5,7 @@ get '/' do
 
   @current_user = User.find(session[:user_id])
   # @current_user_cohort = @current_user.cohort
-  @cohorts = Cohort.all.sort_by {|cohort| cohort.graduation_date}
+  @cohorts = Cohort.all.sort_by {|cohort| cohort.start_date}
   erb :grid
 end
 
@@ -24,7 +24,8 @@ get '/users/:id' do
   user_xfer = {
     mentor_id: user.mentor_id,
     mentor_name: user.mentor.name,
-    cohort: user.cohort.name
+    cohort: user.cohort.name,
+    hometown: user.hometown
   }
   # user_xfer[:mentor_id] = user.mentor_id
   # user_xfer[:mentor_name] = user.mentor.name
@@ -35,8 +36,8 @@ get '/users/:id' do
     user_xfer[:headline] = user.liprofile.headline
   end
 
-  puts "XFER"
-  ap user_xfer
+  # puts "XFER"
+  # ap user_xfer
 
   content_type :json
   user_xfer.to_json

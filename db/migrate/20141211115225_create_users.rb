@@ -5,7 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :name
       t.string :email
       t.string :profile_url
-      t.string :password_hash
+      t.string :hometown
 
       t.integer :lineage_id
       t.belongs_to :mentor, index: true

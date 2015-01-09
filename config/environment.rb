@@ -9,6 +9,7 @@ require 'bundler/setup' if File.exists?(ENV['BUNDLE_GEMFILE'])
 require 'rubygems'
 
 require 'uri'
+
 require 'pathname'
 
 require 'pg'
@@ -25,6 +26,10 @@ require 'faker'
 
 require 'httparty'
 require 'awesome_print'
+
+require 'open-uri'
+require 'dbc-ruby'
+require 'date'
 
 require 'dotenv'
 Dotenv.load

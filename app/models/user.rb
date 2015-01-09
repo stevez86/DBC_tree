@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   # validates :email, uniqueness: true
   # validates :password, :email, presence: true
 
-  after_initialize :defaults
+  after_initialize :defaults, :set_profile_url
 
   def defaults
     self.lineage_id ||= self.id
@@ -29,10 +29,17 @@ class User < ActiveRecord::Base
   end
 
   def mentor=(new_mentor)
-    self.mentor_id = new_mentor.id
-    self.lineage_id = new_mentor.lineage_id
-    set_children
-    self.save!
+    if new_mentor
+      self.mentor_id = new_mentor.id
+      self.lineage_id = new_mentor.lineage_id
+      set_children
+      self.save!
+    end
+  end
+
+  def email=(new_email)
+    self.email = new_email
+    set_profile_url
   end
 
   # def lineage_id=(new_lineage_id)
@@ -63,12 +70,10 @@ class User < ActiveRecord::Base
     end
   end
 
-  def primary_profile_url
-    # return this.liprofile.profile_url if this.liprofile.profile_url
-    return self.profile_url if self.profile_url
-
+  def set_profile_url
     hash = Digest::MD5.hexdigest(self.email)
     default = "&d=" + URI::encode('http://static.sepakbola.com/images/pemain/143823.jpg')
-    return "http://www.gravatar.com/avatar/" + hash + "?s=200" + default
+    self.profile_url = "http://www.gravatar.com/avatar/" + hash + "?s=200" + default
+    self.save
   end
 end

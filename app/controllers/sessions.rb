@@ -28,10 +28,15 @@ get '/login' do
     new_li_user.save
 
     ap new_li_user
-    session[:user_id] = new_li_user.user_id
-    redirect '/'
-  end
 
+    if new_li_user.user_id
+      session[:user_id] = new_li_user.user_id
+      redirect '/'
+    else
+      redirect '/signup'
+    end
+
+  end
 
   erb :login
 end
